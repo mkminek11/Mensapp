@@ -1,0 +1,72 @@
+.content {
+    width: 100%;
+}
+
+.center {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.center > * {
+    float: left;
+}
+
+button {
+    width:  50px;
+    height: 50px;
+    background-color: #ccc;
+    padding: 5px;
+    border: none;
+    border-radius: 50%;
+    transition: 0.3s ease;
+}
+
+button img {
+    width:  40px;
+    height: 40px;
+}
+
+button:hover {
+    background-color: #aaa;
+    /* color: white; */
+}
+
+table {
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+.day {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #bbb;
+    color: black;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.day.today {
+    text-decoration: underline 2px white;
+    /* color: blue; */
+}
+
+.day sup a {
+    font-size: medium;
+    color: red;
+    font-weight: bolder;
+}
+
+.this-month {
+    background-color: #222;
+    color: white;
+}
+
+tbody tr:first-child {
+    border-top: 2px dashed #333;
+}
