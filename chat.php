@@ -1,3 +1,43 @@
+<?php
+    // $userid = $_SESSION["user"];
+    $userid = 1;
+
+    $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
+    $my_chats = mysqli_query($conn, "SELECT * FROM `chats` WHERE `user1` = '$userid' OR `user2` = '$userid' ORDER BY `last_message` DESC");
+
+    $find_user = false;
+
+    if (array_key_exists("find_user", $_GET)) {
+        $find_user = true;
+        $username = $_GET["find_user"];
+        $user_first_name = explode(" ", $username)[0];
+        $user_last_name = end(explode(" ", $username));
+    }
+
+    function message($msg, $side) {
+        echo '<div class="message ';
+        echo  $side ? "from" : "to";
+        echo "\">$msg</div>";
+    }
+
+    $chat_i = 1;
+
+    $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
+
+    if (array_key_exists("m", $_POST)) {
+        $old = json_decode($chat["messages"]);
+        array_push($old, [$userid, $_POST["m"]]);
+        $new = addslashes(json_encode($old, JSON_UNESCAPED_SLASHES));
+        $date = date("Y-m-d");
+        mysqli_query($conn, "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'");
+        // echo "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'";
+        header("Location: http://mensapp.wz.cz/chat.php");
+        exit();
+    } else {
+        echo "Else";
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,23 +49,6 @@
         <link rel="stylesheet" href="style.css">
         <script src="dialog.js"></script>
     </head>
-
-    <?php
-        // $userid = $_SESSION["user"];
-        $userid = 1;
-
-        $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
-        $my_chats = mysqli_query($conn, "SELECT * FROM `chats` WHERE `user1` = '$userid' OR `user2` = '$userid' ORDER BY `last_message` DESC");
-
-        $find_user = false;
-
-        if (array_key_exists("find_user", $_GET)) {
-            $find_user = true;
-            $username = $_GET["find_user"];
-            $user_first_name = explode(" ", $username)[0];
-            $user_last_name = end(explode(" ", $username));
-        }
-    ?>
     
     <body <?php echo $find_user ? "onload='showDialog()'" : "onload='closeDialog()'"; ?>>
 
@@ -78,8 +101,8 @@
                         echo "<div class='chat'><h3>$tchatname</h3></div>";
                         array_push($chats_list, $row["id"]);
                     }
-                    $chat_i = (isset($_GET["c"]) && in_array($chats_list, $_GET["c"]) == 1) ? $_GET["c"] : end($chats_list);
-                    $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
+                    // $chat_i = (isset($_GET["c"]) && in_array($chats_list, $_GET["c"]) == 1) ? $_GET["c"] : end($chats_list);
+                    // $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
                 ?>
             </div>
             <button id="add-chat" onclick="showDialog()">+ New chat</button>
@@ -87,23 +110,8 @@
 
         <div class="main">
             <?php
-                function message($msg, $side) {
-                    echo '<div class="message ';
-                    echo  $side ? "from" : "to";
-                    echo "\">$msg</div>";
-                }
-
                 foreach (json_decode($chat["messages"]) as $message) {
                     message($message[1], $message[0] == $userid);
-                }
-
-                if (array_key_exists("m", $_POST)) {
-                    $old = json_decode($chat["messages"]);
-                    array_push($old, [$userid, $_POST["m"]]);
-                    $new = json_encode($old, JSON_UNESCAPED_SLASHES);
-                    $date = date("Y-m-d");
-                    mysqli_query($conn, "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'"); 
-                    message($_POST["m"], 1);
                 }
             ?>
         </div>
