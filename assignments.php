@@ -38,7 +38,8 @@
                         $project  = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `projects` WHERE `id` = '$project_i'"))["title"];
                         $priority = ["-", "low", "medium", "high", "very high"][$input["priority"]];
                         $state    = ["Not started yet", "Work in progress", "Done"][$input["state"]];
-                        $highlight = (array_key_exists("highlight", $_GET)) ? (($_GET["highlight"]*86400 == strtotime($deadline)+3600) ? " class='highlight'" : "") : "";
+                        $today    = round((strtotime($deadline)+3600) / 86400);
+                        $highlight = (array_key_exists("highlight", $_GET)) ? (($_GET["highlight"] == $today) ? " class='highlight'" : "") : "";
                         echo "<tr$highlight>
                                   <td>$project</td>
                                   <td>$title</td>
