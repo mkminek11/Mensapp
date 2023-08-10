@@ -11,18 +11,18 @@
     <body class="projects">
         <?php
             include 'navigation.php';
-            $uid = $_GET["p"];
+            $pid = $_GET["p"];
 
             $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
             $user = mysqli_query($conn, "SELECT * FROM `users` WHERE `id`='$uid'");
             $data = mysqli_fetch_array($project);
-            $w = mysqli_query($conn, "SELECT * FROM `projects-users` WHERE `projectid`='$pid'");
+            // $w = mysqli_query($conn, "SELECT * FROM `projects-users` WHERE `projectid`='$pid'");
 
-            $title   = $data["title"];
-            $created = $data["created"];
-            $description = $data["description"];
-            $state   = ["Not started yet", "In progress", "Completed"][$data["state"]];
-            $workers = mysqli_num_rows($w);
+            // $title   = $data["title"];
+            // $created = $data["created"];
+            // $description = $data["description"];
+            // $state   = ["Not started yet", "In progress", "Completed"][$data["state"]];
+            // $workers = mysqli_num_rows($w);
         ?>
 
         <div class="content">

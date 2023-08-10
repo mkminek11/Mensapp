@@ -7,7 +7,7 @@
 
 echo '
         <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />-->
-        <header>
+        <nav>
             <h2>Mensapp</h2>
             <div style="flex: 1;"></div>
             <!--<input type="text" name="search" id="search" placeholder="Try to search...">-->
@@ -19,7 +19,7 @@ echo '
                 <a href="assignments.php"> <img class="material-symbols-rounded" src="img/icons/lists.png"         > <span class="nav-label"> Assignments </span> </a>
                 <a href="settings.php"   > <img class="material-symbols-rounded" src="img/icons/settings.png"      > <span class="nav-label"> Settings    </span> </a>
             </div>
-        </header>
+        </nav>
 
 ';
 

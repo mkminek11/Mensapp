@@ -63,9 +63,13 @@ a {
     opacity: 0;
 }
 
+.icon {
+    filter: invert();
+}
+
 /*********************************  HEADER  **********************************/
 
-header {
+nav {
     position: fixed;
     left: 0px;
     right: 0px;
@@ -78,7 +82,7 @@ header {
     z-index: 100;
 }
 
-header a:not(.profile) {
+nav a:not(.profile) {
     text-decoration: none;
     height: min-content;
     margin: 0px 10px;
@@ -86,15 +90,15 @@ header a:not(.profile) {
     flex: 1;
 }
 /* 
-header a.profile img {
+nav a.profile img {
     padding: 15px;
 } */
 
-header a.profile {
+nav a.profile {
     margin-top: calc((var(--nav-height) - 40px) / 2);
 }
 
-header a .material-symbols-rounded {
+nav a .material-symbols-rounded {
     box-sizing: border-box;
     filter: invert();
     width: 36px;
@@ -104,7 +108,7 @@ header a .material-symbols-rounded {
     /* text-align: center; */
 }
 
-header h2 {
+nav h2 {
     color: var(--fg-white);
     height: 30px;
     margin-top: calc((var(--nav-height) - 30px) / 2);
@@ -123,7 +127,7 @@ header h2 {
     padding: 0px 0px;
 }
 
-/*header input {
+/*nav input {
     text-decoration: none;
     height: min-content;
     margin: 0px 10px;
@@ -135,7 +139,7 @@ header h2 {
     background-color: var(--form-white);
 }
 
-header input:active {
+nav input:active {
     border: none;
     outline: none;
 }*/
@@ -151,6 +155,35 @@ header input:active {
     background-color: var(--bg-medium);
     z-index: -10;
     box-shadow: var(--shadow-right);
+    display: flex;
+    flex-direction: column;
+}
+
+.chats {
+    flex: 1;
+    padding: 0px;
+    margin: 0px;
+}
+
+.chat {
+    margin: 10px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    background-color: #fff0;
+}
+
+#add-chat {
+    margin: 10px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    background-color: #0000;
+    height: 50px;
+    font-size: 18px;
+    transition: 0.2s ease;
+}
+
+#add-chat:hover {
+    background-color: #0002;
 }
 
 .main {
@@ -212,10 +245,17 @@ header input:active {
     height: 30px;
     border-radius: 6px;
     margin: 10px;
-    background: linear-gradient(135deg, var(--dark-blue), var(--light-blue));
+    /* background-image: linear-gradient(135deg, var(--dark-blue), var(--light-blue)); */
+    background-color: #1477c7;
     border: none;
     padding: 5px;
     color: var(--fg-white);
+    transition: 0.2s ease;
+}
+
+.submit:hover {
+    /* background-image: linear-gradient(135deg, #1164a8, #1477c7); */
+    background-color: #1164a8;
 }
 
 .submit img {
@@ -394,6 +434,82 @@ body.index button#submit {
 
 @keyframes blinker {
     50% {
-      background-color: #fdd0;
+        background-color: #fdd0;
     }
-  }
+}
+
+/*********************************  DIALOG  **********************************/
+
+dialog {
+    width:  30%;
+    height: 30%;
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+dialog .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+dialog .close-button {
+    width:  50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #0000;
+    color: #000;
+    border: none;
+    font-size: x-large;
+    transition: 0.2s ease;
+    text-align: center;
+    padding-top: 8px;
+    box-sizing: border-box;
+}
+
+dialog .close-button:hover {
+    background-color: #eee;
+    color: #f00;
+}
+
+dialog button img {
+    width:  20px;
+    height: 20px;
+}
+
+dialog .search {
+    padding: 12px 13px 10px;
+    background-color: #0000;
+    border-radius: 50%;
+    border: none;
+    transition: 0.2s ease;
+    margin-left: 10px;
+}
+
+dialog .search:hover {
+    background-color: #eee;
+}
+
+dialog::backdrop {
+    background-color: 0004;
+    backdrop-filter: blur(5px);
+}
+
+dialog input[type=text] {
+    /* height: ; */
+    align-self: center;
+    padding: 5px;
+    flex: 1;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid #aaa;
+}
+
+dialog input:focus {
+    border: 2px solid #26e;
+}
+
+dialog output {
+    overflow: scroll;
+}
