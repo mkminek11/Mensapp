@@ -32,7 +32,6 @@ body {
     background-color: var(--bg-light);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--fg-black);
-    height: 100%;
 }
 
 a {
@@ -65,6 +64,10 @@ a {
 
 .icon {
     filter: invert();
+}
+
+form {
+    margin: 0px;
 }
 
 /*********************************  HEADER  **********************************/
@@ -228,8 +231,8 @@ nav input:active {
 }
 
 .textbox {
-    width: calc(80% - 50px);
-    height: 20px;
+    width:  calc(80%  - 50px);
+    height: calc(100% - 20px);
     margin: 10px;
     padding: 5px;
     border-radius: 6px;
@@ -284,31 +287,11 @@ nav input:active {
     color: var(--fg-white);
 }
 
-.settings select {
-    background-color: transparent;
-    border: none;
-    margin: 0;
-    width: 100%;
-    outline: none;
-    background-color: var(--dark-blue);
-    border-radius: 3px;
-    padding: 5px;
-    color: var(--fg-white);
-}
-
-.settings option {
-    background-color: var(--dark-blue);
-    color: var(--fg-white);
-    border: none;
-    border-radius: 3px;
-    box-shadow: none;
-    padding: 40px;
-}
-
 /*********************************  INDEX  ***********************************/
 
 body.index {
     background: var(--color-gradient);
+    height: 100%;
 }
 
 body.index .content {

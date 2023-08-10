@@ -27,7 +27,7 @@
                     </tr>
                 </table>
             </form>
-            <p style="font-size: small; text-align: center;">Don't have an account? Sign up <a href="signup.html">here</a>.</p>
+            <p style="font-size: small; text-align: center;">Don't have an account? Sign up <a href="signup.php">here</a>.</p>
             <?php echo "<p style=\"text-align: center; color: red;\">$_GET[m]</p>"; ?>
         </div>
     </body>

@@ -5,9 +5,9 @@
 		<meta name="description" content="content. coasi.">
 		<meta name="author" content="Mensa Camp Dev Team">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="style.css">
     </head>
-    <body>
+    <body class="index">
         <div class="content">
             <h2>Account creation</h2>
             <form action="create_account.php" method="post">
