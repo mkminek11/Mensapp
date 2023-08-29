@@ -11,6 +11,8 @@ if (mysqli_num_rows($user)) {
     
     session_start();
     $_SESSION["user"] = mysqli_fetch_array($user)["id"];
+    $_SESSION["expire"] = strtotime("Next hour");
+
     echo "<script>window.location.replace('projects.php');</script>";
 } else {
     echo "<script>window.location.replace('index.php?m=Wrong password');</script>";

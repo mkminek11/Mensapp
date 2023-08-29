@@ -1,8 +1,12 @@
 <?php
 
-// if (!isset($_SESSION["user"])) {
-//     header("Location: index.php");
-// }
+session_start();
+
+if (!array_key_exists("user", $_SESSION)) {
+    header("Location: index.php?m=You have to log in first.");
+} elseif (!array_key_exists("expire", $_SESSION) or $_SESSION["expire"] < strtotime("now")) {
+    header("Location: index.php?m=Your login has expired.");
+}
 
 
 echo '
@@ -11,7 +15,7 @@ echo '
             <h2>Mensapp</h2>
             <div style="flex: 1;"></div>
             <!--<input type="text" name="search" id="search" placeholder="Try to search...">-->
-            <a href="profile.php" class="profile"> <img src="http://mensapp.wz.cz/img/profiles/red.png" style="border-radius: 50%; width: 40px; height: 40px;"></a>
+            <a href="logout.php" class="profile"> <img src="http://mensapp.wz.cz/img/profiles/red.png" style="border-radius: 50%; width: 40px; height: 40px;"></a>
             <div class="nav-front">
                 <a href="projects.php"   > <img class="material-symbols-rounded" src="img/icons/web.png"           > <span class="nav-label"> Projects    </span> </a>
                 <a href="chat.php"       > <img class="material-symbols-rounded" src="img/icons/chat.png"          > <span class="nav-label"> Chat        </span> </a>
