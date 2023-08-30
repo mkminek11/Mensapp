@@ -1,5 +1,5 @@
 <?php
-    // $userid = $_SESSION["user"];
+    /*// $userid = $_SESSION["user"];
     $userid = 1;
 
     $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
@@ -35,7 +35,7 @@
         exit();
     } else {
         echo "Else";
-    }
+    }*/
 ?>
 
 <!DOCTYPE html>
@@ -94,13 +94,13 @@
         <div class="sidebar">
             <div class="chats">
                 <?php
-                    $chats_list = [];
+                    /*$chats_list = [];
                     while ($row = mysqli_fetch_array($my_chats)) {
                         $tchat = $row["user1"]==$userid ? $row["user2"] : $row["user1"];
                         $tchatname = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `users` WHERE `id` = '$tchat'"))["fname"];
                         echo "<div class='chat'><h3>$tchatname</h3></div>";
                         array_push($chats_list, $row["id"]);
-                    }
+                    }*/
                     // $chat_i = (isset($_GET["c"]) && in_array($chats_list, $_GET["c"]) == 1) ? $_GET["c"] : end($chats_list);
                     // $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
                 ?>
@@ -110,16 +110,16 @@
 
         <div class="main">
             <?php
-                foreach (json_decode($chat["messages"]) as $message) {
+                /*foreach (json_decode($chat["messages"]) as $message) {
                     message($message[1], $message[0] == $userid);
-                }
+                }*/
             ?>
         </div>
 
         <div class="write">
             <form method="post">
                 <button type="submit" class="submit"><img src="img/icons/send.png"></button>
-                <input type="text" class="textbox" name="m">
+                <input type="text" class="textbox" name="m" autocomplete="off">
             </form>
         </div>
 
