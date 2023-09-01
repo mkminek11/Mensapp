@@ -31,7 +31,7 @@
             <?php
             if (array_key_exists("ma-login-email", $_POST)) {
                 $email    = $_POST["ma-login-email"];
-                $password = $_POST["ma-login-password"];
+                $password = md5($_POST["ma-login-password"]);
                 
                 $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
                 $sql = "SELECT * FROM `users` WHERE `email`='$email' AND `password`='$password'";
@@ -47,6 +47,7 @@
                     echo "<script>window.location.replace('projects.php');</script>";
                 } else {
                     echo "<p style=\"text-align: center; color: red;\">Wrong password.</p>";
+                    // echo $password;
                 }
             }
 
@@ -56,5 +57,6 @@
             // echo "<p style=\"text-align: center; color: red;\">$_GET[m]</p>";
             ?>
         </div>
+        <br id="end">
     </body>
 </html>
