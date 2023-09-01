@@ -49,6 +49,10 @@
                     echo "<p style=\"text-align: center; color: red;\">Wrong password.</p>";
                 }
             }
+
+            if (array_key_exists("m", $_GET)) {
+                echo "<p style=\"text-align: center; color: red;\">$_GET[m]</p>";
+            }
             // echo "<p style=\"text-align: center; color: red;\">$_GET[m]</p>";
             ?>
         </div>

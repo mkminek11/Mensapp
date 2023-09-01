@@ -11,23 +11,6 @@
     </head>
     
     <body onload="update_messages()" id="chat">
-        <?php include 'navigation.php'; ?>
-
-        <div style="display:none;" id="data">
-            <?php
-                // $userid = $_SESSION["user"];
-                $userid = 1;
-                $user2  = 2;
-
-                $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
-                $my_chats = mysqli_query($conn, "SELECT * FROM `chats` WHERE `user1` = '$userid' OR `user2` = '$userid' ORDER BY `last_message` DESC");
-
-                echo $userid;
-                echo "<br>";
-                echo $user2;
-            ?>
-        </div>
-
         <dialog id="dialog">
             <main>
                 <div class="row">
@@ -46,6 +29,23 @@
                 </div>
             </main>
         </dialog>
+
+        <?php include 'navigation.php'; ?>
+
+        <div style="display:none;" id="data">
+            <?php
+                // $userid = $_SESSION["user"];
+                $userid = 1;
+                $user2  = 2;
+
+                $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
+                $my_chats = mysqli_query($conn, "SELECT * FROM `chats` WHERE `user1` = '$userid' OR `user2` = '$userid' ORDER BY `last_message` DESC");
+
+                echo $userid;
+                echo "<br>";
+                echo $user2;
+            ?>
+        </div>
 
         <div class="sidebar">
             <div class="chats">

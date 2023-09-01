@@ -13,11 +13,11 @@
             <form action="create_account.php" method="post">
                 <table>
                     <tr>
-                        <td><label for="ma-login-password">First name:</label></td>
+                        <td><label for="ma-login-fname">First name:</label></td>
                         <td><input type="text" name="ma-login-fname"></td>
                     </tr>
                     <tr>
-                        <td><label for="ma-login-password">Last name:</label></td>
+                        <td><label for="ma-login-lname">Last name:</label></td>
                         <td><input type="text" name="ma-login-lname"></td>
                     </tr>
                     <tr>
@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button type="submit" name="submit" id="submit">Sign up</button>
+                            <button name="submit" id="submit" onclick="signup()">Sign up</button>
                         </td>
                     </tr>
                 </table>
