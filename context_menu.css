@@ -1,0 +1,42 @@
+.context_menu {
+    display: none;
+    list-style-type: none;
+    font-size: small;
+    z-index: 9999;
+    background-color: #333;
+
+    margin: 0px;
+    border-radius: 7px;
+    padding: 8px 4px;
+    position: absolute;
+    top: -25px;
+    right: -5px;
+    /* min-width: calc(attr(length number) * 37 - 5);    -    not supported yet, works since CSS4 */
+}
+
+/* until that, this ugly thing does the work */
+.context_menu:has(> :last-child:nth-child(4)) {min-width: calc(4 * 37 - 5);}  /* 4 children (the last child is also 4th from the beginning) */
+.context_menu:has(> :last-child:nth-child(6)) {min-width: calc(6 * 37 - 5);}  /* 6 children (the last child is also 6th from the beginning) */
+
+.context_menu a {
+    margin: 0px;
+    display: inline;
+    margin: 0px;
+    padding: 8px 6px 4px;
+    border-radius: 4px;
+    transition: 0.2s ease;
+}
+
+.context_menu a img {
+    filter: invert();
+    width:  20px;
+    height: 20px;
+}
+
+.context_menu a:hover {
+    background-color: #555;
+}
+
+.message:hover .context_menu {
+    display: block;
+}

@@ -7,6 +7,7 @@
 		<meta name="author" content="Mensa Camp Dev Team">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="context_menu.css">
         <script src="dialog.js"></script>
     </head>
     
@@ -64,13 +65,11 @@
             <button id="add-chat" onclick="showDialog()">+ New chat</button>
         </div>
 
-        <div class="main" id="main">
-            
-        </div>
+        <div class="main" id="main"></div>
 
         <div class="write">
-            <button class="submit" onclick="post()"><img src="img/icons/send.png"></button>
-            <input type="text" class="textbox" name="m" id="textbox" autocomplete="off">
+            <!-- <button class="submit" onclick="post()"><img src="img/icons/send.png"></button> -->
+            <input type="text" class="textbox" name="m" id="textbox" autocomplete="off" onkeydown="if (event.keyCode == 13) post();"> <!-- On <enter> pressed, call `post()` -->
         </div>
 
         <script src="chat.js"></script>

@@ -42,8 +42,27 @@ function messages() {  // REQUIRES: user1, user2
 
 function message($msg, $from) {
     echo '<div class="message ';
-    echo  $from ? "from" : "to";
-    echo "\">$msg</div>";
+    if ($from) {
+        echo 'from">
+        <div class="context_menu" length="6">
+            <a title="Edit"   ><img class="material-symbols-rounded" src="img/icons/edit.png"    ></a>
+            <a title="Delete" ><img class="material-symbols-rounded" src="img/icons/delete.png"  ></a>
+            <a title="Forward"><img class="material-symbols-rounded" src="img/icons/forward.png" ></a>
+            <a title="Reply"  ><img class="material-symbols-rounded" src="img/icons/reply.png"   ></a>
+            <a title="React"  ><img class="material-symbols-rounded" src="img/icons/reaction.png"></a>
+            <a title="Info"   ><img class="material-symbols-rounded" src="img/icons/info.png"    ></a>
+        </div>';
+    } else {
+        echo 'to">
+        <div class="context_menu" length="4">
+            <a title="Forward"><img class="material-symbols-rounded" src="img/icons/forward.png" ></a>
+            <a title="Reply"  ><img class="material-symbols-rounded" src="img/icons/reply.png"   ></a>
+            <a title="React"  ><img class="material-symbols-rounded" src="img/icons/reaction.png"></a>
+            <a title="Info"   ><img class="material-symbols-rounded" src="img/icons/info.png"    ></a>
+        </div>';
+    }
+    echo "<span class='message_content'>$msg</span>";
+    echo "</div>";
 }
 
 function post_message() {  // REQUIRES: user1, user2, msg
