@@ -44,7 +44,7 @@
                                   <td>$project</td>
                                   <td>$title</td>
                                   <td>$desc</td>
-                                  <td class='$priority'>$priority</td>
+                                  <td class='priority $priority'>$priority</td>
                                   <td>$deadline</td>
                                   <td>$state</td>
                               </tr>";

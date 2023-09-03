@@ -22,9 +22,12 @@ function search() {  // REQUIRES: query
         `lname` LIKE '%$user_first_name%' OR
         `lname` LIKE '%$user_last_name%'");
 
+    $results = 0;
     while ($user = mysqli_fetch_array($found)) {
         echo "$user[fname] $user[lname]<br>";
+        $results ++;
     }
+    if ($results == 0) {echo '<font style="color: red; font-weight: 500;">No matching results</font>';}
 }
 
 function messages() {  // REQUIRES: user1, user2
@@ -44,7 +47,7 @@ function message($msg, $from) {
     echo '<div class="message ';
     if ($from) {
         echo 'from">
-        <div class="context_menu" length="6">
+        <div class="context_menu cm6">
             <a title="Edit"   ><img class="material-symbols-rounded" src="img/icons/edit.png"    ></a>
             <a title="Delete" ><img class="material-symbols-rounded" src="img/icons/delete.png"  ></a>
             <a title="Forward"><img class="material-symbols-rounded" src="img/icons/forward.png" ></a>
@@ -54,7 +57,7 @@ function message($msg, $from) {
         </div>';
     } else {
         echo 'to">
-        <div class="context_menu" length="4">
+        <div class="context_menu cm4">
             <a title="Forward"><img class="material-symbols-rounded" src="img/icons/forward.png" ></a>
             <a title="Reply"  ><img class="material-symbols-rounded" src="img/icons/reply.png"   ></a>
             <a title="React"  ><img class="material-symbols-rounded" src="img/icons/reaction.png"></a>

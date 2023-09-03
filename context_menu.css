@@ -15,8 +15,8 @@
 }
 
 /* until that, this ugly thing does the work */
-.context_menu:has(> :last-child:nth-child(4)) {min-width: calc(4 * 37 - 5);}  /* 4 children (the last child is also 4th from the beginning) */
-.context_menu:has(> :last-child:nth-child(6)) {min-width: calc(6 * 37 - 5);}  /* 6 children (the last child is also 6th from the beginning) */
+.cm4 {min-width: calc(4px * 34.8 - 2.8px);}
+.cm6 {min-width: calc(6px * 34.8 - 2.8px);}
 
 .context_menu a {
     margin: 0px;

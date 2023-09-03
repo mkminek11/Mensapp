@@ -1,38 +1,49 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@400;500;600;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;600&display=swap');
+
 :root {
     /* --dark-blue:  #1477c7; */
     /* --light-blue: #56a4e3; */
-    --light-blue: #48f;
-    --dark-blue:  #37e;
-    --color-gradient: linear-gradient(-45deg, var(--dark-blue), var(--light-blue), var(--dark-blue));
-
-    --bg-light:    #eee;
-    --bg-medium:   #ddd;
-    --bg-dark:     #ccc;
-    --bg-darker:   #aaa;
-
+    /* --light-blue: #69f; */
+    /* --dark-blue:  #58e; */
+    --light-blue: #5ae;
+    --dark-blue:  #17c;
+    --color-gradient: linear-gradient(135deg, var(--dark-blue), var(--light-blue));
+    --bg1: #eee;
+    --bg2: #ddd;
+    --bg3: #ccc;
+    --bg5: #aaa;
+    --bg9: #333;
     --form-white:  #fff;
-
     --fg-white:    #fff;
     --fg-grey:     #aaa;
     --fg-black:    #000;
-
     --shadow-color: #0004;
     --shadow-down:  0px  5px 5px var(--shadow-color);
     --shadow-up:    0px -2px 2px var(--shadow-color);
     --shadow-right: 2px  0px 2px var(--shadow-color);
     --shadow:       2px  2px 2px var(--shadow-color);
-
     --priority-low:    #0c3;
     --priority-medium: #db0;
     --priority-hight:  #e00;
 
     --nav-height: 100px;
+    --message-space: 20px;
+    --message-space-small: 3px;
+    --message-max-width: 80%;
+
+    --layout-sidebar-width: 20%;
+    --layout-footer-height: 50px;
+    --layout-main-width:    80%;
 }
 
 body {
     margin: 0;
-    background-color: var(--bg-light);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: var(--bg1);
+    /* font-family: "Catamaran"; */
+    font-family: Outfit;
+    font-weight: 300;
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
     color: var(--fg-black);
 }
 
@@ -51,6 +62,7 @@ a {
     font-size: large;
     margin-top: 3px;
     font-variant-caps: all-petite-caps;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .content {
@@ -164,8 +176,8 @@ nav input:active {
     top: var(--nav-height);
     bottom: 0px;
     left: 0px;
-    width: 20%;
-    background-color: var(--bg-medium);
+    width: var(--layout-sidebar-width);
+    background-color: var(--bg2);
     z-index: -10;
     box-shadow: var(--shadow-right);
     display: flex;
@@ -203,10 +215,10 @@ nav input:active {
     position: absolute;
     box-sizing: border-box;
     top: var(--nav-height);
-    height: calc(100% - var(--nav-height) - 50px);
+    bottom: var(--layout-footer-height);
     right: 0px;
-    width: 80%;
-    background-color: var(--bg-light);
+    width: var(--layout-main-width);
+    background-color: var(--bg1);
     padding: 20px;
     z-index: -50;
     overflow-y: scroll;
@@ -216,9 +228,9 @@ nav input:active {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 80%;
-    height: 50px;
-    background-color: var(--bg-medium);
+    width: var(--layout-main-width);
+    height: var(--layout-footer-height);
+    background-color: var(--bg2);
     box-shadow: var(--shadow-up);
     z-index: -30;
     padding: 0;
@@ -226,8 +238,8 @@ nav input:active {
 
 #chat .message {
     clear: both;
-    margin-top: 20px;
-    max-width: 80%;
+    margin-top: var(--message-space);
+    max-width: var(--message-max-width);
     display: inline-block;
     position: relative;
     word-wrap: break-word;
@@ -240,24 +252,27 @@ nav input:active {
 }
 
 #chat .to {float: left;}
-
-#chat .to .message_content {background-color: var(--bg-dark);}
+#chat .to .message_content {background-color: var(--bg3);}
+#chat .to + .to {margin-top: var(--message-space-small);}
 
 #chat .from {float: right;}
-
 #chat .from .message_content {background-color: var(--light-blue);}
+#chat .from + .from {margin-top: var(--message-space-small);}
 
 #chat .textbox {
-    width:  60%;
-    height: calc(100% - 30px);
-    margin: 10px 20%;
-    padding: 5px;
+    --v-margin:  10px;
+    --padding: 5px;
+    --width: 60%;
+
+    width:  var(--width);
+    height: calc(100% - 2*var(--v-margin) - 2*var(--padding));
+    margin: var(--v-margin) calc((100% - var(--width)) / 2);
+    padding: var(--padding);
     border-radius: 6px;
     text-decoration: none;
     box-shadow: var(--shadow);
     border: none;
     background-color: var(--fg-white);
-    /* vertical-align: mi; */
 }
 
 #chat .submit {
@@ -266,7 +281,7 @@ nav input:active {
     border-radius: 6px;
     margin: 10px;
     /* background-image: linear-gradient(135deg, var(--dark-blue), var(--light-blue)); */
-    background-color: #1477c7;
+    background-color: var(--light-blue);
     border: none;
     padding: 5px;
     color: var(--fg-white);
@@ -275,7 +290,7 @@ nav input:active {
 
 #chat .submit:hover {
     /* background-image: linear-gradient(135deg, #1164a8, #1477c7); */
-    background-color: #1164a8;
+    background-color: var(--dark-blue);
 }
 
 #chat .submit img {
@@ -388,6 +403,7 @@ body.index button#submit {
     top: 115px;
     color: var(--fg-white);
     font-variant-caps: all-petite-caps;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 120%;
     max-width: 150px;
     padding: 10px;
@@ -404,7 +420,9 @@ body.index button#submit {
 }
 
 .assignments thead td {
-    background-color: var(--bg-darker);
+    background-color: var(--dark-blue);
+    color: var(--fg-white);
+    font-weight: 600;
 }
 
 .assignments td {
@@ -413,6 +431,10 @@ body.index button#submit {
 
 .assignments .content {
     width: 100%;
+}
+
+.assignments .priority {
+    font-weight: 600;
 }
 
 .assignments td.low {
