@@ -12,11 +12,11 @@
     </head>
     
     <body onload="update_messages()" id="chat">
-        <dialog id="dialog">
+        <dialog id="search">
             <main>
                 <div class="row">
                     <h2>New chat</h2>
-                    <button class="close-button" onclick="closeDialog()">&#x2716</button>
+                    <button class="close-button" onclick="closeDialog('search')">&#x2716</button>
                 </div>
                 <div class="row">
                     Search for a person:
@@ -51,18 +51,19 @@
         <div class="sidebar">
             <div class="chats">
                 <?php
-                    /*$chats_list = [];
+                    $chats_list = [];
                     while ($row = mysqli_fetch_array($my_chats)) {
-                        $tchat = $row["user1"]==$userid ? $row["user2"] : $row["user1"];
+                        $tchat = $row["user1"] == $userid ? $row["user2"] : $row["user1"];
+                        // $tchat = $row["id"];
                         $tchatname = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `users` WHERE `id` = '$tchat'"))["fname"];
                         echo "<div class='chat'><h3>$tchatname</h3></div>";
                         array_push($chats_list, $row["id"]);
                     }
-                    $chat_i = (isset($_GET["c"]) && in_array($chats_list, $_GET["c"]) == 1) ? $_GET["c"] : end($chats_list);
-                    $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));*/
+                    // $chat_i = (isset($_GET["c"]) && in_array($chats_list, $_GET["c"]) == 1) ? $_GET["c"] : end($chats_list);
+                    // $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
                 ?>
             </div>
-            <button id="add-chat" onclick="showDialog()">+ New chat</button>
+            <button id="add-chat" onclick="showDialog('search')">+ New chat</button>
         </div>
 
         <div class="main" id="main"></div>

@@ -239,24 +239,29 @@ nav input:active {
 #chat .message {
     clear: both;
     margin-top: var(--message-space);
-    max-width: var(--message-max-width);
+    /* max-width: var(--message-max-width); */
+    /* min-width: ; */
+    /* width: fit-content; */
+    width: 100%;
     display: inline-block;
     position: relative;
     word-wrap: break-word;
 }
 
 #chat .message .message_content {
-    padding: 8px;
+    padding: 15px;
     border-radius: 10px;
     display: block;
+    clear: both;
+    max-width: var(--message-max-width);
 }
 
 #chat .to {float: left;}
-#chat .to .message_content {background-color: var(--bg3);}
+#chat .to .message_content {float: left; background-color: var(--bg3);}
 #chat .to + .to {margin-top: var(--message-space-small);}
 
 #chat .from {float: right;}
-#chat .from .message_content {background-color: var(--light-blue);}
+#chat .from .message_content {float: right; background-color: var(--light-blue);}
 #chat .from + .from {margin-top: var(--message-space-small);}
 
 #chat .textbox {

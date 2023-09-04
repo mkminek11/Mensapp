@@ -1,5 +1,8 @@
 .context_menu {
     display: none;
+    opacity: 0;
+    transition: 0.3s ease;
+
     list-style-type: none;
     font-size: small;
     z-index: 9999;
@@ -8,15 +11,16 @@
     margin: 0px;
     border-radius: 7px;
     padding: 8px 4px;
+
     position: absolute;
-    top: -25px;
+    top: -30px;
     right: -5px;
-    /* min-width: calc(attr(length number) * 37 - 5);    -    not supported yet, works since CSS4 */
+    float: left;
+
+    box-shadow: 2px 2px 3px #3333;
 }
 
-/* until that, this ugly thing does the work */
-.cm4 {min-width: calc(4px * 34.8 - 2.8px);}
-.cm6 {min-width: calc(6px * 34.8 - 2.8px);}
+.to .context_menu {left: 5px; right: unset;}
 
 .context_menu a {
     margin: 0px;
@@ -37,6 +41,7 @@
     background-color: #555;
 }
 
-.message:hover .context_menu {
+.message .message_content:hover + .context_menu, .context_menu:hover {
     display: block;
+    opacity: 1;
 }
