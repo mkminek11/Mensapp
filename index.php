@@ -28,7 +28,7 @@
                     </tr>
                 </table>
             </form>
-            <p style="font-size: small; text-align: center;">Don't have an account? Sign up <a href="signup.php">here</a>.</p>
+            <p class="small" style="text-align: center;">Don't have an account?<br class="mobile-only"> Sign up <a href="signup.php">here</a>.</p>
             <?php
             if (array_key_exists("ma-login-email", $_POST)) {
                 $email    = $_POST["ma-login-email"];
