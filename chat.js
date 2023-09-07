@@ -59,13 +59,15 @@ function reply(i) {chat_processor_request("reply", {"id": i});}
 function react(i) {chat_processor_request("react", {"id": i});}
 function  info(i) {chat_processor_request("info",  {"chat_i": 1, "message": i}, format_info);}
 
+const message_shown_length = 10;
+
 function format_info(text) {
     x = JSON.parse(text);
-    message = (x[1].length > 6) ? x[1][0] + "..." : x[1];
+    message = (x[1].length > message_shown_length) ? x[1].substring(0, message_shown_length-3) + "..." : x[1];
 
     var utcSeconds = x[2];
     var d = new Date(0);
     d.setUTCSeconds(utcSeconds);
 
-    alert("Message")
+    alert("Message: " + message);
 }

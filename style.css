@@ -27,7 +27,7 @@
     --priority-medium: #db0;
     --priority-hight:  #e00;
 
-    --nav-height: 100px;
+    --nav-height: 60px;
     --message-space: 20px;
     --message-space-small: 3px;
     --message-max-width: 80%;
@@ -56,15 +56,6 @@ a {
     vertical-align: bottom;
 }
 
-.nav-label {
-    display: block;
-    text-align: center;
-    font-size: large;
-    margin-top: 3px;
-    font-variant-caps: all-petite-caps;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
 .content {
     position: absolute;
     top: var(--nav-height);
@@ -86,22 +77,6 @@ form {
 
 button {
     cursor: pointer;
-}
-
-.loading {
-    margin: auto;
-    width: 120px;
-    height: 120px;
-    /* aspect-ratio: 1; */
-    border: 20px solid var(--bg5);
-    border-top: var(--dark-blue);
-    border-radius: 50%;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0%   {transform: rotate(0deg);   }
-    100% {transform: rotate(360deg); }
 }
 
 .small {
@@ -152,16 +127,24 @@ nav h2 {
 }
 
 nav .nav-front {
+    background: var(--color-gradient);
     position: fixed;
-    left: 600px;
-    right: 600px;
-    top: 0px;
+    left:   0px;
+    right:  0px;
+    bottom: 0px;
+    max-width: 100%;
+
     display: flex;
     flex-direction: row;
     align-items: center;
+
     height: var(--nav-height);
     z-index: 110;
     padding: 0px 0px;
+}
+
+nav .nav-label {
+    display: none;
 }
 
 /**********************************  CHAT  ***********************************/
@@ -388,16 +371,20 @@ nav .nav-front {
 
 .cards {
     display: flex;
-    justify-content: left;
+    justify-content: space-around;
     flex-wrap: wrap;
     padding-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
 }
   
 .card {
-    width: 200px;
-    height: 190px;
+    width: 40%;
+    /* height: 190px; */
+    aspect-ratio: 4/3;
     padding-top: 10px;
-    margin: 10px 27.75px;
+    margin: 5px;
     border-radius: 10px;
     text-align: center;
     margin-bottom: 40px;
@@ -409,7 +396,7 @@ nav .nav-front {
 .card p {
     margin-inline: auto;
     position: relative;
-    top: 115px;
+    bottom: -40px;
     color: var(--fg-white);
     font-variant-caps: all-petite-caps;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
