@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="context_menu.css">
         <script src="dialog.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     
     <body onload="update_messages()" id="chat">

@@ -9,9 +9,9 @@ function display(year=null, month=null) {
     if (year) {xhttp.open("GET", "calendar_embed.php?month="+month+"&year="+year+"&user=1", true);} else {xhttp.open("GET", "calendar_embed.php?user=1", true);}
     xhttp.onload = function () {
         document.getElementById("output").innerHTML = this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1];
+        document.getElementById("month").innerHTML = months[cur_month-1] + " " + cur_year;
     }
     xhttp.send();
-    document.getElementById("month").innerHTML = months[cur_month-1] + " " + cur_year;
 }
 
 function next() {

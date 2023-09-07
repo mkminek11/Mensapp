@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="calendar.css">
         <script src="calendar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body onload="display()">
         <?php include 'navigation.php'; ?>

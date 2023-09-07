@@ -88,6 +88,22 @@ button {
     cursor: pointer;
 }
 
+.loading {
+    margin: auto;
+    width: 120px;
+    height: 120px;
+    /* aspect-ratio: 1; */
+    border: 20px solid var(--bg5);
+    border-top: var(--dark-blue);
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0%   {transform: rotate(0deg);   }
+    100% {transform: rotate(360deg); }
+  }
+
 /*********************************  HEADER  **********************************/
 
 nav {
@@ -110,10 +126,6 @@ nav a:not(.profile) {
     color: var(--fg-white);
     flex: 1;
 }
-/* 
-nav a.profile img {
-    padding: 15px;
-} */
 
 nav a.profile {
     margin-top: calc((var(--nav-height) - 40px) / 2);
@@ -135,7 +147,7 @@ nav h2 {
     margin-top: calc((var(--nav-height) - 30px) / 2);
 }
 
-.nav-front {
+nav .nav-front {
     position: fixed;
     left: 600px;
     right: 600px;
@@ -147,23 +159,6 @@ nav h2 {
     z-index: 110;
     padding: 0px 0px;
 }
-
-/*nav input {
-    text-decoration: none;
-    height: min-content;
-    margin: 0px 10px;
-    box-shadow: var(--shadow);
-    border: none;
-    border-radius: 2px;
-    padding: 5px;
-    width: 20%;
-    background-color: var(--form-white);
-}
-
-nav input:active {
-    border: none;
-    outline: none;
-}*/
 
 /**********************************  CHAT  ***********************************/
 
@@ -326,12 +321,12 @@ nav input:active {
 
 /*********************************  INDEX  ***********************************/
 
-body.index {
+.index {
     background: var(--color-gradient);
     height: 100%;
 }
 
-body.index .content {
+.index .content {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -343,22 +338,22 @@ body.index .content {
     box-shadow: var(--shadow);
 }
 
-body.index h2 {
+.index h2 {
     text-align: center;
     font-size: xx-large;
 }
 
-body.index table {
+.index table {
     margin: auto;
 }
 
-body.index td {
+.index td {
     min-width: 150px;
     padding-bottom: 5px;
     font-size: larger;
 }
 
-body.index input {
+.index input {
     border: none;
     text-decoration: none;
     height: min-content;
@@ -368,7 +363,7 @@ body.index input {
     padding: 5px;
 }
 
-body.index button#submit {
+.index button#submit {
     width: 80%;
     margin: 0px 10%;
     height: 30px;

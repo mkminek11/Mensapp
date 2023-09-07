@@ -6,6 +6,7 @@
 		<meta name="author" content="Mensa Camp Dev Team">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body class="projects">
