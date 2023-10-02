@@ -10,7 +10,6 @@ if (!array_key_exists("user", $_SESSION)) {
 
 
 echo '
-        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />-->
         <nav>
             <h2>Mensapp</h2>
             <div style="flex: 1;"></div>

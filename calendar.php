@@ -2,10 +2,7 @@
 <html>
     <head>
         <title>Mensapp</title>
-        <meta http-equiv="X-UA-Compatible" content="IE-edge" charset="UTF-8">
-		<meta name="description" content="content. coasi.">
 		<meta name="author" content="Mensa Camp Dev Team">
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="calendar.css">
         <script src="calendar.js"></script>

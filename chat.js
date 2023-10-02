@@ -1,13 +1,14 @@
 var data = document.getElementById("data").innerHTML.split("<br>");
-var myuser = data[0];
-var user2  = data[1];
+var myuser = data[0].trim();
+var user2  = data[1].trim();
+var chat_i = data[2].trim();
 
 function chat_processor_request(process, args, fun) {
     var arg = [];
     for (const [key, value] of Object.entries(args)) {arg.push("&" + key.toString() + "=" + value.toString());}
 
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "chat_processor.php?p="+process + arg.join(), true);
+    xhttp.open("GET", "chat_processor.php?p="+process + arg.join(""), true);
     xhttp.onload = function () {
         fun(this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1]);
     }
@@ -52,22 +53,26 @@ function post() {
     }
 }
 
-function  edit(i) {chat_processor_request("edit",  {"id": i});}
-function   del(i) {chat_processor_request("del",   {"id": i});}
-function   fwd(i) {chat_processor_request("fwd",   {"id": i});}
-function reply(i) {chat_processor_request("reply", {"id": i});}
-function react(i) {chat_processor_request("react", {"id": i});}
-function  info(i) {chat_processor_request("info",  {"chat_i": 1, "message": i}, format_info);}
+function  edit(i) {chat_processor_request("edit",  {"id": i}, console.log);}
+function   del(i) {chat_processor_request("del",   {"chat_i": chat_i, "message": i}, console.log);}
+function   fwd(i) {chat_processor_request("fwd",   {"id": i}, console.log);}
+function reply(i) {chat_processor_request("reply", {"id": i}, console.log);}
+function react(i) {chat_processor_request("react", {"id": i}, console.log);}
+function  info(i) {chat_processor_request("info",  {"chat_i": chat_i, "message": i}, format_info);}
 
-const message_shown_length = 10;
+const message_shown_length = 30;
 
 function format_info(text) {
-    x = JSON.parse(text);
-    message = (x[1].length > message_shown_length) ? x[1].substring(0, message_shown_length-3) + "..." : x[1];
+    console.log(text)
+    let x = JSON.parse(text);
+    let message = (x[1].length > message_shown_length) ? x[1].substring(0, message_shown_length-3) + "..." : x[1];
+    let utc = new Date(1000 * x[2]);
+
+    let time = utc.getDate() + ". " + (utc.getMonth()+1) + ". " + utc.getFullYear() + ", " + utc.getHours() + ":" + utc.getMinutes();
 
     var utcSeconds = x[2];
     var d = new Date(0);
     d.setUTCSeconds(utcSeconds);
 
-    alert("Message: " + message);
+    alert("Message: " + message + "\nPosted: " + time + "\n" + x[3] + "\n" + x[4]);
 }

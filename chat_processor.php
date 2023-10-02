@@ -5,7 +5,8 @@ $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e
 if ($_REQUEST["p"] == "search")   {search();}
 if ($_REQUEST["p"] == "messages") {messages();}
 if ($_REQUEST["p"] == "post")     {post_message();}
-if ($_REQUEST["p"] == "info")     {info();}
+if ($_REQUEST["p"] == "info")     {msg_info();}
+if ($_REQUEST["p"] == "del")      {msg_delete();}
 
 
 function search() {  // REQUIRES: query
@@ -41,7 +42,7 @@ function messages() {  // REQUIRES: user1, user2
 
     $i = 0;
     foreach (json_decode($chat["messages"]) as $message) {
-        message($message[1], $message[0] == $myuser, $i);
+        if ($message[4] == "Visible") {message($message[1], $message[0] == $myuser, $i);}
         $i ++;
     }
 }
@@ -90,18 +91,35 @@ function post_message() {  // REQUIRES: user1, user2, msg
     /* echo "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'"; */
 }
 
-function info() {  // REQUIRES: chat_i, message
+function msg_info() {  // REQUIRES: chat_i, message
     global $conn;
     
     $chat_i  = $_REQUEST["chat_i"];
     $message = $_REQUEST["message"];
     $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
-    // echo $chat["messages"][$message];
+
     // echo $message;
     echo json_encode(json_decode($chat["messages"])[$message]);
+
     // echo $message;
     // echo $chat_i;
     // print_r($_REQUEST);
+}
+
+function msg_delete() {  // REQUIRES: chat_i, message
+    global $conn;
+
+    $chat_i  = $_REQUEST["chat_i"];
+    $message = $_REQUEST["message"];
+    $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
+
+    $m = json_decode($chat["messages"]);
+    $m[$message][4] = "Deleted";
+    $json = json_encode($m);
+
+    // print_r($json);
+
+    mysqli_query($conn, "UPDATE `chats` SET `messages` = '$json' WHERE `id` = '$chat_i'");
 }
 
 ?>

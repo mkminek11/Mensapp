@@ -27,7 +27,7 @@
     --priority-medium: #db0;
     --priority-hight:  #e00;
 
-    --nav-height: 60px;
+    --nav-height: 100px;
     --message-space: 20px;
     --message-space-small: 3px;
     --message-max-width: 80%;
@@ -79,9 +79,11 @@ button {
     cursor: pointer;
 }
 
-.small {
-    font-size: large;
+.mobile-only {
+    display: none;
 }
+
+.small {font-size: small;}
 
 /*********************************  HEADER  **********************************/
 
@@ -127,24 +129,25 @@ nav h2 {
 }
 
 nav .nav-front {
-    background: var(--color-gradient);
     position: fixed;
-    left:   0px;
-    right:  0px;
-    bottom: 0px;
-    max-width: 100%;
-
+    left: 600px;
+    right: 600px;
+    top: 0px;
     display: flex;
     flex-direction: row;
     align-items: center;
-
     height: var(--nav-height);
     z-index: 110;
     padding: 0px 0px;
 }
 
 nav .nav-label {
-    display: none;
+    display: block;
+    text-align: center;
+    font-size: large;
+    margin-top: 3px;
+    font-variant-caps: all-petite-caps;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /**********************************  CHAT  ***********************************/
@@ -314,13 +317,11 @@ nav .nav-label {
 }
 
 .index .content {
-    --width:  90%;
     position: absolute;
-    top:  50%;
+    top: 50%;
     left: 50%;
-    background-color: #fff1;
-    color: var(--fg-white);
-    width: var(--width);
+    background-color: #eeeeeedd;
+    width: 40%;
     height: auto;
     transform: translate(-50%, -50%);
     border-radius: 25px;
@@ -339,10 +340,7 @@ nav .nav-label {
 .index td {
     min-width: 150px;
     padding-bottom: 5px;
-    font-size: x-large;
-    display: block;
-    text-align: center;
-    color: #333;
+    font-size: larger;
 }
 
 .index input {
@@ -356,8 +354,8 @@ nav .nav-label {
 }
 
 .index button#submit {
-    width: 100%;
-    margin-top: 30px;
+    width: 80%;
+    margin: 0px 10%;
     height: 30px;
     font-size: large;
     border: none;
@@ -371,20 +369,16 @@ nav .nav-label {
 
 .cards {
     display: flex;
-    justify-content: space-around;
+    justify-content: left;
     flex-wrap: wrap;
     padding-top: 20px;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
 }
   
 .card {
-    width: 40%;
-    /* height: 190px; */
-    aspect-ratio: 4/3;
+    width: 200px;
+    height: 190px;
     padding-top: 10px;
-    margin: 5px;
+    margin: 10px 27.75px;
     border-radius: 10px;
     text-align: center;
     margin-bottom: 40px;
@@ -396,7 +390,7 @@ nav .nav-label {
 .card p {
     margin-inline: auto;
     position: relative;
-    bottom: -40px;
+    top: 115px;
     color: var(--fg-white);
     font-variant-caps: all-petite-caps;
     font-family: Verdana, Geneva, Tahoma, sans-serif;

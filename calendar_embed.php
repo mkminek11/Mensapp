@@ -3,7 +3,7 @@ date_default_timezone_set('Europe/London');
 
 $smonth    = intval(array_key_exists("month", $_REQUEST) ? $_REQUEST["month"] : date("m")) - 1;
 $syear     = intval(array_key_exists("year",  $_REQUEST) ? $_REQUEST["year"]  : date("Y"));
-$user = array_key_exists("user", $_REQUEST) ? $_REQUEST["user"] : null;
+$user = array_key_exists("user", $_REQUEST) ? $_REQUEST["user"] : "non-existing user id";
 
 $_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -13,7 +13,8 @@ if ($user) {
 }
 
 $start_sun = time2days(strtotime("first Sunday of $_MONTHS[$smonth] $syear"));  // number of days from 01-01-1970 to first sunday of given month + year
-$start_day = $start_sun - 6;
+$start_day = round($start_sun - 6);
+
 // $start_day = time2days(strtotime("1st $_MONTHS[$smonth] $syear"));
 
 $month_first = time2days(strtotime("first day of $_MONTHS[$smonth] $syear"));
