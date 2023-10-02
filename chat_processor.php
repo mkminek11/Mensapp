@@ -54,7 +54,8 @@ function message($msg, $from, $i) {
         <span class="message_content">'.$msg.'</span>
         <div class="context_menu" anchor="msg'.$i.'">
             <a title="Edit"   ><img class="material-symbols-rounded" src="img/icons/edit.png"     onclick=" edit('.$i.')"></a>
-            <a title="Delete" ><img class="material-symbols-rounded" src="img/icons/delete.png"   onclick="  del('.$i.')"></a>
+            <a title="Delete" ><img class="material-symbols-rounded" src="img/icons/delete.png"   onclick="
+                                if (confirm(\'Do you really want to permanently delete this message?\')) {     del('.$i.');}"></a>
             <a title="Forward"><img class="material-symbols-rounded" src="img/icons/forward.png"  onclick="  fwd('.$i.')"></a>
             <a title="Reply"  ><img class="material-symbols-rounded" src="img/icons/reply.png"    onclick="reply('.$i.')"></a>
             <a title="React"  ><img class="material-symbols-rounded" src="img/icons/reaction.png" onclick="react('.$i.')"></a>

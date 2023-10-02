@@ -15,7 +15,7 @@ function chat_processor_request(process, args, fun) {
     xhttp.send();
 }
 
-function update_messages() {
+function update_messages(args=null) {
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", "chat_processor.php?p=messages&user1="+myuser+"&user2="+user2, true);
     xhttp.onload = function () {
@@ -54,7 +54,7 @@ function post() {
 }
 
 function  edit(i) {chat_processor_request("edit",  {"id": i}, console.log);}
-function   del(i) {chat_processor_request("del",   {"chat_i": chat_i, "message": i}, console.log);}
+function   del(i) {chat_processor_request("del",   {"chat_i": chat_i, "message": i}, update_messages);}
 function   fwd(i) {chat_processor_request("fwd",   {"id": i}, console.log);}
 function reply(i) {chat_processor_request("reply", {"id": i}, console.log);}
 function react(i) {chat_processor_request("react", {"id": i}, console.log);}
