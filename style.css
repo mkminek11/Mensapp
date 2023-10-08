@@ -197,6 +197,11 @@ nav .nav-label {
 }
 
 #chat .main {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#chat .main {
     position: absolute;
     box-sizing: border-box;
     top: var(--nav-height);
@@ -219,14 +224,14 @@ nav .nav-label {
     box-shadow: var(--shadow-up);
     z-index: -30;
     padding: 0;
+
+    display: flex;
+    flex-direction: row;
 }
 
 #chat .message {
     clear: both;
     margin-top: var(--message-space);
-    /* max-width: var(--message-max-width); */
-    /* min-width: ; */
-    /* width: fit-content; */
     width: 100%;
     display: inline-block;
     position: relative;
@@ -256,34 +261,50 @@ nav .nav-label {
 
     width:  var(--width);
     height: calc(100% - 2*var(--v-margin) - 2*var(--padding));
-    margin: var(--v-margin) calc((100% - var(--width)) / 2);
+    /* margin: var(--v-margin) calc((100% - var(--width)) / 2); */
+    margin: var(--v-margin) 10px;
     padding: var(--padding);
     border-radius: 6px;
     text-decoration: none;
     box-shadow: var(--shadow);
     border: none;
     background-color: var(--fg-white);
+
+    flex: 5;
 }
 
-#chat .submit {
+#reply_output {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+
+#reply_output * {
+    list-style-type: none;
+    margin: 0px !important;
+}
+
+#chat .write button {
     width: 50px;
     height: 30px;
     border-radius: 6px;
-    margin: 10px;
-    /* background-image: linear-gradient(135deg, var(--dark-blue), var(--light-blue)); */
-    background-color: var(--light-blue);
+    margin: 10px 0px 0px 10px;
+    background-image: linear-gradient(135deg, var(--dark-blue), var(--light-blue));
+    /* background-color: var(--light-blue); */
     border: none;
     padding: 5px;
     color: var(--fg-white);
     transition: 0.2s ease;
+    box-shadow: var(--shadow);
 }
 
-#chat .submit:hover {
-    /* background-image: linear-gradient(135deg, #1164a8, #1477c7); */
-    background-color: var(--dark-blue);
+#chat .write button:hover {
+    background-image: linear-gradient(135deg, #1164a8, #1477c7);
+    /* background-color: var(--dark-blue); */
 }
 
-#chat .submit img {
+#chat .write button img {
     filter: invert();
     height: 20px;
 }

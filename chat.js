@@ -3,6 +3,8 @@ var myuser = data[0].trim();
 var user2  = data[1].trim();
 var chat_i = data[2].trim();
 
+var replying = null;
+
 function chat_processor_request(process, args, fun) {
     var arg = [];
     for (const [key, value] of Object.entries(args)) {arg.push("&" + key + "=" + value);}
@@ -19,7 +21,7 @@ function update_messages(args=null) {
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", "chat_processor.php?p=messages&user1="+myuser+"&user2="+user2, true);
     xhttp.onload = function () {
-        document.getElementById("main").innerHTML = this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1];
+        document.getElementById("messages").innerHTML = this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1];
     }
     xhttp.send();
 }
@@ -46,6 +48,7 @@ function post() {
         xhttp.onload = function () {
             // document.getElementById("main").innerHTML = this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1];
             update_messages();
+            alert(this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1])
             document.getElementById("textbox").value = "";
 
         }
@@ -58,14 +61,33 @@ function   del(i) {chat_processor_request("del",   {"chat_i": chat_i, "message":
 function  edit(i) {chat_processor_request("edit",  {"chat_i": chat_i, "message": i, "new": prompt("Edit message:")}, update_messages);}
 function   fwd(i) {chat_processor_request("fwd",   {"id": i}, console.log);}
 function react(i) {chat_processor_request("react", {"id": i}, console.log);}
-function reply(i) {}
+function reply(i) {
+    let output   = document.getElementById("reply_output");
+    let main     = document.getElementById("main");
+    let messages = main.getElementsByClassName("message");
+    let message = messages[i].getElementsByClassName("message_content")[0].innerHTML;
+    replying = i;
+    output.innerHTML = "<li>Replying to:&nbsp;</li><li style='flex: 1'>" + trim_max(message, message_shown_length) + "</li><li><button onclick='cancel_reply()'>&#x2716</button>";
+    output.style.flex = 2;
+}
+
+function cancel_reply() {
+    let output = document.getElementById("reply_output");
+    replying = null;
+    output.innerHTML = "";
+    output.style.flex = 0;
+}
 
 const message_shown_length = 30;
+
+function trim_max(text="", max_length=10) {
+    return (text.length > max_length) ? text.substring(0, max_length - 3) + "..." : text;
+}
 
 function format_info(text) {
     console.log(text)
     let x = JSON.parse(text);
-    let message = (x[1].length > message_shown_length) ? x[1].substring(0, message_shown_length-3) + "..." : x[1];
+    let message = trim_max(x[1], message_shown_length)
     let utc = new Date(1000 * x[2]);
 
     let time = utc.getDate() + ". " + (utc.getMonth()+1) + ". " + utc.getFullYear() + ", " + utc.getHours() + ":" + utc.getMinutes();

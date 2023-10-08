@@ -42,7 +42,15 @@
                 $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
                 $my_chats = mysqli_query($conn, "SELECT * FROM `chats` WHERE `user1` = '$userid' OR `user2` = '$userid' ORDER BY `last_message` DESC");
                 
-                $user2  = array_key_exists("i", $_GET) ? $_GET["i"] : 0;
+                $chats_list = [];
+                while ($row = mysqli_fetch_array($my_chats)) {
+                    $tchat = $row["user1"] == $userid ? $row["user2"] : $row["user1"];
+                    // $tchat = $row["id"];
+                    $tchatname = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `users` WHERE `id` = '$tchat'"));
+                    array_push($chats_list, $tchatname);
+                }
+                
+                $user2 = array_key_exists("i", $_GET) ? $_GET["i"] : $chats_list[0]["id"];
 
                 echo $userid;
                 echo "<br>";
@@ -55,13 +63,8 @@
         <div class="sidebar">
             <div class="chats">
                 <?php
-                    $chats_list = [];
-                    while ($row = mysqli_fetch_array($my_chats)) {
-                        $tchat = $row["user1"] == $userid ? $row["user2"] : $row["user1"];
-                        // $tchat = $row["id"];
-                        $tchatname = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `users` WHERE `id` = '$tchat'"));
-                        echo "<div class='chat'><h3><a href='chat.php?i=$tchatname[id]'>$tchatname[fname] $tchatname[lname]</a></div>";
-                        array_push($chats_list, $row["id"]);
+                    foreach ($chats_list as $value) {
+                        echo "<div class='chat'><h3><a href='chat.php?i=$value[id]'>$value[fname] $value[lname]</a></div>";
                     }
                     // $chat_i = (isset($_GET["c"]) && in_array($chats_list, $_GET["c"]) == 1) ? $_GET["c"] : end($chats_list);
                     // $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
@@ -70,10 +73,15 @@
             <button id="add-chat" onclick="showDialog('search')">+ New chat</button>
         </div>
 
-        <div class="main" id="main"></div>
+        <div class="main" id="main">
+            <div id="messages"></div>
+        </div>
 
         <div class="write">
+            <button><img class="material-symbols-rounded" src="img/icons/reaction.png"></button>
+            <button><img class="material-symbols-rounded" src="img/icons/attach_file.png"></button>
             <input type="text" class="textbox" name="m" id="textbox" autocomplete="off" onkeydown="if (event.keyCode == 13) post();"> <!-- On <enter> pressed, call `post()` -->
+            <span id="reply_output"></span>
         </div>
 
         <script src="chat.js"></script>

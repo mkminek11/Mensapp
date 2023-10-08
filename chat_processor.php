@@ -89,9 +89,11 @@ function post_message() {  // REQUIRES: user1, user2, msg
     array_push($old, [$myuser, $_REQUEST["msg"], $now, "Unedited", "Visible"]);
     $new = addslashes(json_encode($old, JSON_UNESCAPED_SLASHES));
     // print_r($new);
-    $date = date("Y-m-d");
+    $date = date("Y-m-d h:i:s");
     mysqli_query($conn, "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'");
     /* echo "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'"; */
+
+    echo $_REQUEST["msg"];
 }
 
 
@@ -103,12 +105,7 @@ function msg_info() {        // REQUIRES: chat_i, message
     $message = $_REQUEST["message"];
     $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
 
-    // echo $message;
     echo json_encode(json_decode($chat["messages"])[$message]);
-
-    // echo $message;
-    // echo $chat_i;
-    // print_r($_REQUEST);
 }
 
 function msg_delete() {      // REQUIRES: chat_i, message
