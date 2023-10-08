@@ -5,7 +5,7 @@ var chat_i = data[2].trim();
 
 function chat_processor_request(process, args, fun) {
     var arg = [];
-    for (const [key, value] of Object.entries(args)) {arg.push("&" + key.toString() + "=" + value.toString());}
+    for (const [key, value] of Object.entries(args)) {arg.push("&" + key + "=" + value);}
 
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", "chat_processor.php?p="+process + arg.join(""), true);
@@ -53,12 +53,12 @@ function post() {
     }
 }
 
-function  edit(i) {chat_processor_request("edit",  {"id": i}, console.log);}
-function   del(i) {chat_processor_request("del",   {"chat_i": chat_i, "message": i}, update_messages);}
-function   fwd(i) {chat_processor_request("fwd",   {"id": i}, console.log);}
-function reply(i) {chat_processor_request("reply", {"id": i}, console.log);}
-function react(i) {chat_processor_request("react", {"id": i}, console.log);}
 function  info(i) {chat_processor_request("info",  {"chat_i": chat_i, "message": i}, format_info);}
+function   del(i) {chat_processor_request("del",   {"chat_i": chat_i, "message": i}, update_messages);}
+function  edit(i) {chat_processor_request("edit",  {"chat_i": chat_i, "message": i, "new": prompt("Edit message:")}, update_messages);}
+function   fwd(i) {chat_processor_request("fwd",   {"id": i}, console.log);}
+function react(i) {chat_processor_request("react", {"id": i}, console.log);}
+function reply(i) {}
 
 const message_shown_length = 30;
 

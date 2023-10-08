@@ -5,8 +5,10 @@ $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e
 if ($_REQUEST["p"] == "search")   {search();}
 if ($_REQUEST["p"] == "messages") {messages();}
 if ($_REQUEST["p"] == "post")     {post_message();}
+
 if ($_REQUEST["p"] == "info")     {msg_info();}
 if ($_REQUEST["p"] == "del")      {msg_delete();}
+if ($_REQUEST["p"] == "edit")     {msg_edit();}
 
 
 function search() {  // REQUIRES: query
@@ -84,7 +86,7 @@ function post_message() {  // REQUIRES: user1, user2, msg
 
     $old = json_decode($chat["messages"]);
     $now = strtotime("now");
-    array_push($old, [$myuser, $_REQUEST["msg"], $now, "Unedited"]);
+    array_push($old, [$myuser, $_REQUEST["msg"], $now, "Unedited", "Visible"]);
     $new = addslashes(json_encode($old, JSON_UNESCAPED_SLASHES));
     // print_r($new);
     $date = date("Y-m-d");
@@ -92,7 +94,9 @@ function post_message() {  // REQUIRES: user1, user2, msg
     /* echo "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'"; */
 }
 
-function msg_info() {  // REQUIRES: chat_i, message
+
+
+function msg_info() {        // REQUIRES: chat_i, message
     global $conn;
     
     $chat_i  = $_REQUEST["chat_i"];
@@ -107,7 +111,7 @@ function msg_info() {  // REQUIRES: chat_i, message
     // print_r($_REQUEST);
 }
 
-function msg_delete() {  // REQUIRES: chat_i, message
+function msg_delete() {      // REQUIRES: chat_i, message
     global $conn;
 
     $chat_i  = $_REQUEST["chat_i"];
@@ -119,6 +123,27 @@ function msg_delete() {  // REQUIRES: chat_i, message
     $json = json_encode($m);
 
     // print_r($json);
+
+    mysqli_query($conn, "UPDATE `chats` SET `messages` = '$json' WHERE `id` = '$chat_i'");
+}
+
+function msg_edit() {        // REQUIRES: chat_i, message, new
+    $new = $_REQUEST["new"];
+
+    if ($new == "null" || $new == "") {return;}
+
+    global $conn;
+
+    $chat_i  = $_REQUEST["chat_i"];
+    $message = $_REQUEST["message"];
+
+    $chat = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `chats` WHERE `id` = '$chat_i'"));
+
+    $m = json_decode($chat["messages"]);
+    $m[$message][1] = $new;
+    $m[$message][3] = "Edited " . date("d. m. Y");
+
+    $json = json_encode($m);
 
     mysqli_query($conn, "UPDATE `chats` SET `messages` = '$json' WHERE `id` = '$chat_i'");
 }
