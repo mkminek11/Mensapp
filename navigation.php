@@ -8,6 +8,7 @@ if (!array_key_exists("user", $_SESSION)) {
     header("Location: index.php?m=Your login has expired.");
 }
 
+$_SESSION["expire"] = strtotime("Next hour");
 
 echo '
         <nav>

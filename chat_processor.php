@@ -145,4 +145,7 @@ function msg_edit() {        // REQUIRES: chat_i, message, new
     mysqli_query($conn, "UPDATE `chats` SET `messages` = '$json' WHERE `id` = '$chat_i'");
 }
 
+session_start();
+$_SESSION["expire"] = strtotime("Next hour");
+
 ?>
