@@ -154,6 +154,7 @@ nav .nav-label {
 
 #chat {
     overflow: hidden;
+    --attachments-height: 40px;
 }
 
 #chat .sidebar {
@@ -199,13 +200,11 @@ nav .nav-label {
 #chat .main {
     display: flex;
     flex-direction: column-reverse;
-}
-
-#chat .main {
     position: absolute;
     box-sizing: border-box;
     top: var(--nav-height);
     bottom: var(--layout-footer-height);
+    /* bottom: calc(var(--layout-footer-height) + 30px); */
     right: 0px;
     width: var(--layout-main-width);
     background-color: var(--bg1);
@@ -224,6 +223,7 @@ nav .nav-label {
     box-shadow: var(--shadow-up);
     z-index: -30;
     padding: 0;
+    user-select: none;
 
     display: flex;
     flex-direction: row;
@@ -285,7 +285,7 @@ nav .nav-label {
     margin: 0px !important;
 }
 
-#chat .write button {
+#chat .write button, #chat .write label {
     width: 50px;
     height: 30px;
     border-radius: 6px;
@@ -297,17 +297,53 @@ nav .nav-label {
     color: var(--fg-white);
     transition: 0.2s ease;
     box-shadow: var(--shadow);
+    box-sizing: border-box;
 }
 
-#chat .write button:hover {
+#chat .write button:hover, #chat .write label:hover {
     background-image: linear-gradient(135deg, #1164a8, #1477c7);
     /* background-color: var(--dark-blue); */
 }
 
-#chat .write button img {
+#chat .write button img, #chat .write label img {
     filter: invert();
     height: 20px;
+    margin: auto;
 }
+
+#chat #attachments {
+    user-select: none;
+    display: none;
+    position: absolute;
+    bottom: var(--layout-footer-height);
+    right: 0;
+    width: var(--layout-main-width);
+    height: var(--attachments-height);
+    overflow: scroll;
+}
+
+#chat #attachments div {
+    margin: 0px 10px 10px;
+    background-color: var(--bg2);
+    font-size: small;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+}
+
+#chat #attachments button {
+    font-size: smaller;
+    background-color: var(--light-blue);
+    color: var(--fg-white);
+    border: none;
+    border-radius: 2px;
+}
+
+#chat #attachments button:hover {
+    background-color: var(--dark-blue);
+}
+
 
 /********************************  SETTINGS  *********************************/
 

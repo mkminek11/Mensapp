@@ -4,6 +4,8 @@ var user2  = data[1].trim();
 var chat_i = data[2].trim();
 
 var replying = null;
+var attachments_count = 0;
+var attachment_files = [];
 
 function chat_processor_request(process, args, fun) {
     var arg = [];
@@ -97,4 +99,37 @@ function format_info(text) {
     d.setUTCSeconds(utcSeconds);
 
     alert("Message: " + message + "\nPosted: " + time + "\n" + x[3] + "\n" + x[4]);
+}
+
+function attach(files) {
+    for (let file of files) {
+        if (!attachment_files.includes(file)) {
+            document.getElementById("main").style.bottom = "calc(var(--layout-footer-height) + var(--attachments-height))";
+            let attachments = document.getElementById("attachments");
+            attachments.style.display = "flex";
+            attachments.innerHTML += "<div><img class='material-symbols-rounded' src='img/icons/attach_file.png' style='width: 16px'>" + 
+                    "<span style='margin: 0px 10px;'>" + trim_max(file.name, 30) + "</span>" +
+                    "<button onclick='cancel_attachment(" + attachments_count + ")'>&#x2716</button></div>" + 
+                    "&nbsp;";  // invisible character, just for splitting
+            attachments_count ++;
+            attachment_files.push(file)
+        } else {
+            console.log("This file is already attached. (" + file.name + ")");
+            console.log(attachment_files)
+        }
+    }
+}
+
+function cancel_attachment(att_id) {
+    alert(attachment_files[att_id].name);
+    attachment_files.splice(att_id, 1);
+    
+    let obj = document.getElementById("attachments");
+    let attachments = obj.innerHTML.split("&nbsp;");
+    
+    attachments.splice(att_id, 1)
+    
+    attachments.forEach((v, i, a) => {a[i] = v.replace(new RegExp("cancel_attachment\\(.+\\)","gm"), "cancel_attachment("+i+")")})
+
+    obj.innerHTML = attachments.join("&nbsp;")
 }
