@@ -107,10 +107,10 @@ function attach(files) {
             document.getElementById("main").style.bottom = "calc(var(--layout-footer-height) + var(--attachments-height))";
             let attachments = document.getElementById("attachments");
             attachments.style.display = "flex";
-            attachments.innerHTML += "<div><img class='material-symbols-rounded' src='img/icons/attach_file.png' style='width: 16px'>" + 
+            attachments.innerHTML += "&nbsp;" + // invisible character, just for splitting
+                    "<div><img class='material-symbols-rounded' src='img/icons/attach_file.png' style='width: 16px'>" + 
                     "<span style='margin: 0px 10px;'>" + trim_max(file.name, 30) + "</span>" +
-                    "<button onclick='cancel_attachment(" + attachments_count + ")'>&#x2716</button></div>" + 
-                    "&nbsp;";  // invisible character, just for splitting
+                    "<button onclick='cancel_attachment(" + attachments_count + ")'>&#x2716</button></div>";  
             attachments_count ++;
             attachment_files.push(file)
         } else {
@@ -121,15 +121,29 @@ function attach(files) {
 }
 
 function cancel_attachment(att_id) {
-    alert(attachment_files[att_id].name);
     attachment_files.splice(att_id, 1);
     
     let obj = document.getElementById("attachments");
     let attachments = obj.innerHTML.split("&nbsp;");
     
-    attachments.splice(att_id, 1)
+    attachments.splice(att_id + 1, 1)
     
     attachments.forEach((v, i, a) => {a[i] = v.replace(new RegExp("cancel_attachment\\(.+\\)","gm"), "cancel_attachment("+i+")")})
 
     obj.innerHTML = attachments.join("&nbsp;")
+
+    if (attachments.length <= 1) {
+        document.getElementById("main").style.bottom = "calc(var(--layout-footer-height))";
+        document.getElementById("attachments").style.display = "none";
+    }
+}
+
+function cancel_all_attachments() {
+    attachment_files = [];
+
+    let obj = document.getElementById("attachments");
+    obj.innerHTML = obj.innerHTML.split("&nbsp;")[0];
+
+    document.getElementById("main").style.bottom = "calc(var(--layout-footer-height))";
+    document.getElementById("attachments").style.display = "none";
 }

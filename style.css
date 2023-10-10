@@ -317,7 +317,7 @@ nav .nav-label {
     position: absolute;
     bottom: var(--layout-footer-height);
     right: 0;
-    width: var(--layout-main-width);
+    width: calc(var(--layout-main-width) - 5px);
     height: var(--attachments-height);
     overflow: scroll;
 }
@@ -330,6 +330,7 @@ nav .nav-label {
     padding: 5px;
     box-sizing: border-box;
     display: flex;
+    white-space: nowrap;
 }
 
 #chat #attachments button {
@@ -342,6 +343,21 @@ nav .nav-label {
 
 #chat #attachments button:hover {
     background-color: var(--dark-blue);
+}
+
+#chat #attachments .close-all {
+    margin: 0px 10px 10px;
+    width: calc(var(--attachments-height) - 10px);
+    border-radius: 50%;
+    background-color: #0000;
+    color: var(--fg-black);
+    transition: 0.2s ease;
+    flex-shrink: 0;
+}
+
+#chat #attachments .close-all:hover {
+    background-color: var(--bg2);
+    color: #f00;
 }
 
 

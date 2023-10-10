@@ -77,7 +77,7 @@
             <div id="messages"></div>
         </div>
 
-        <div id="attachments"></div>
+        <div id="attachments"><button onclick='cancel_all_attachments()' class="close-all" title="Cancel all attachments">&#x2716</button></div></div>
 
         <div class="write">
             <button><img class="material-symbols-rounded" src="img/icons/reaction.png"></button>
