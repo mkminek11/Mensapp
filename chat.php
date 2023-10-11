@@ -82,7 +82,7 @@
         <div class="write">
             <button><img class="material-symbols-rounded" src="img/icons/reaction.png"></button>
             <label for="file_upload"><img class="material-symbols-rounded" src="img/icons/attach_file.png" style="position:relative;left:50%;transform:translateX(-50%) rotate(45deg);"></label>
-            <input type="file" id="file_upload" style="display:none;" onchange="attach(this.files);" multiple>
+            <input type="file" id="file_upload" style="display:none;" onchange="attach(this.files);" name="file[]" multiple>
             <input type="text" class="textbox" name="m" id="textbox" autocomplete="off" onkeydown="if (event.keyCode == 13) post();"> <!-- On <enter> pressed, call `post()` -->
             <span id="reply_output"></span>
         </div>

@@ -274,7 +274,7 @@ nav .nav-label {
 }
 
 #reply_output {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
     padding: 10px;
@@ -298,6 +298,7 @@ nav .nav-label {
     transition: 0.2s ease;
     box-shadow: var(--shadow);
     box-sizing: border-box;
+    display: inline-block;
 }
 
 #chat .write button:hover, #chat .write label:hover {

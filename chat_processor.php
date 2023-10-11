@@ -5,6 +5,7 @@ $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e
 if ($_REQUEST["p"] == "search")   {search();}
 if ($_REQUEST["p"] == "messages") {messages();}
 if ($_REQUEST["p"] == "post")     {post_message();}
+if ($_REQUEST["p"] == "upload")   {upload();}
 
 if ($_REQUEST["p"] == "info")     {msg_info();}
 if ($_REQUEST["p"] == "del")      {msg_delete();}
@@ -93,7 +94,7 @@ function post_message() {  // REQUIRES: user1, user2, msg
     mysqli_query($conn, "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'");
     /* echo "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'"; */
 
-    echo $_REQUEST["msg"];
+    //  echo $_REQUEST["msg"];
 }
 
 
@@ -143,6 +144,29 @@ function msg_edit() {        // REQUIRES: chat_i, message, new
     $json = json_encode($m);
 
     mysqli_query($conn, "UPDATE `chats` SET `messages` = '$json' WHERE `id` = '$chat_i'");
+}
+
+function upload() {
+    $files_count = count($_FILES["file"]["name"]);
+
+    $target_dir = "img/user_upload/";
+
+    for ($i = 0; $i < $files_count; $i ++) {
+        global $conn;
+
+        $in_folder = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `media`"));
+
+        $file_type = end(explode(".", $_FILES["file"]["name"][$i]));
+        echo $file_type;
+        $file_name = sprintf('%05d', $in_folder) . "." . $file_type;
+        // basename($_FILES["file"]["name"][$i])
+
+        $target_file_path = $target_dir . $file_name;
+
+        if (move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file_path)) {
+            mysqli_query($conn, "INSERT INTO `media` (`org_name`, `file`) VALUES ('" . $_FILES["file"]["name"][$i] . "', '$file_name')");
+        }
+    }
 }
 
 session_start();

@@ -7,6 +7,7 @@ var replying = null;
 var attachments_count = 0;
 var attachment_files = [];
 
+
 function chat_processor_request(process, args, fun) {
     var arg = [];
     for (const [key, value] of Object.entries(args)) {arg.push("&" + key + "=" + value);}
@@ -45,7 +46,7 @@ function search() {
 function post() {
     let value = document.getElementById("textbox").value;
     if (!/^\s*$/.test(value)) {
-        var xhttp = new XMLHttpRequest();
+        /*var xhttp = new XMLHttpRequest();
         xhttp.open("GET", "chat_processor.php?p=post&user1="+myuser+"&user2="+user2+"&msg="+value, true);
         xhttp.onload = function () {
             // document.getElementById("main").innerHTML = this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1];
@@ -54,7 +55,21 @@ function post() {
             document.getElementById("textbox").value = "";
 
         }
-        xhttp.send();
+        xhttp.send();*/
+        const xhr = new XMLHttpRequest();
+        const fd  = new FormData();
+        const f   = document.querySelector("#file_upload");
+        
+        for (const file of f.files) {
+            fd.append("file[]", file, file.name)
+        }
+
+        xhr.open("POST", "chat_processor.php?p=upload");
+        xhr.onload = function () {
+            console.log(this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1]);
+        }
+
+        xhr.send(fd);
     }
 }
 
@@ -112,7 +127,7 @@ function attach(files) {
                     "<span style='margin: 0px 10px;'>" + trim_max(file.name, 30) + "</span>" +
                     "<button onclick='cancel_attachment(" + attachments_count + ")'>&#x2716</button></div>";  
             attachments_count ++;
-            attachment_files.push(file)
+            attachment_files.push(file);
         } else {
             console.log("This file is already attached. (" + file.name + ")");
             console.log(attachment_files)
