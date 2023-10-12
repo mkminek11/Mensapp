@@ -45,17 +45,7 @@ function search() {
 
 function post() {
     let value = document.getElementById("textbox").value;
-    if (!/^\s*$/.test(value)) {
-        /*var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "chat_processor.php?p=post&user1="+myuser+"&user2="+user2+"&msg="+value, true);
-        xhttp.onload = function () {
-            // document.getElementById("main").innerHTML = this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1];
-            update_messages();
-            alert(this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1])
-            document.getElementById("textbox").value = "";
-
-        }
-        xhttp.send();*/
+    if (!/^\s*$/.test(value)) {  // if message is not empty nor made just out of spaces
         const xhr = new XMLHttpRequest();
         const fd  = new FormData();
         const f   = document.querySelector("#file_upload");
@@ -64,12 +54,16 @@ function post() {
             fd.append("file[]", file, file.name)
         }
 
-        xhr.open("POST", "chat_processor.php?p=upload");
+        xhr.open("POST", "chat_processor.php?p=post&user1="+myuser+"&user2="+user2+"&msg="+value+"&attachments="+attachments);
         xhr.onload = function () {
             console.log(this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1]);
         }
 
         xhr.send(fd);
+
+        cancel_all_attachments();
+        document.querySelector("#textbox").value = "";
+        update_messages();
     }
 }
 
@@ -115,6 +109,8 @@ function format_info(text) {
 
     alert("Message: " + message + "\nPosted: " + time + "\n" + x[3] + "\n" + x[4]);
 }
+
+
 
 function attach(files) {
     for (let file of files) {

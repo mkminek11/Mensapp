@@ -239,11 +239,16 @@ nav .nav-label {
 }
 
 #chat .message .message_content {
-    padding: 15px;
+    padding: 15px 10px;
     border-radius: 10px;
     display: block;
     clear: both;
     max-width: var(--message-max-width);
+}
+
+#chat .message .message_content .message_text {
+    margin-bottom: 10px;
+    display: block;
 }
 
 #chat .to {float: left;}
@@ -361,6 +366,15 @@ nav .nav-label {
     color: #f00;
 }
 
+#chat .attachment {
+    display: block;
+    padding: 10px;
+    font-size: medium;
+    background-color: var(--bg9);
+    color: var(--fg-white);
+    border: none;
+    border-radius: 10px;
+}
 
 /********************************  SETTINGS  *********************************/
 

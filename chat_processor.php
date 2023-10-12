@@ -45,40 +45,56 @@ function messages() {  // REQUIRES: user1, user2
 
     $i = 0;
     foreach (json_decode($chat["messages"]) as $message) {
-        if ($message[4] == "Visible") {message($message[1], $message[0] == $myuser, $i);}
+        if ($message[4] == "Visible") {message($message[1], $message[0] == $myuser, $i, $message[5]);}
         $i ++;
     }
 }
 
-function message($msg, $from, $i) {
-    echo '<div id="msg'.$i.'" class="message ';
+function trim_file(string $file_name, int $max_length = 20) {
+    $ff = end(explode($file_name, "."));
+    $end = strlen($ff) + 5;
+    return (strlen($file_name) <= $max_length) ? ($file_name) : (substr($file_name, 0, $max_length - $end - 3) . "..." . substr($file_name, -$end));
+}
+
+function message(string $msg, bool $from, int $i, string $att_json) {
+    // "[[\"00000.txt\",\"fonty.txt\"]]"
+    $a_names = json_decode($att_json);
+    $attachments = [];
+    foreach ($a_names as $data) {
+        array_push($attachments, "<button class='attachment' onclick='window.open(\"img/user_upload/$data[0]\", \"_blank\")'>" . trim_file($data[1]) . "</button>");
+    }
+
+    echo '<div id="msg'.$i.'" class="message ' . ($from ? 'from' : 'to') . '">
+            <div class="message_content"><span class="message_text">' . $msg . '</span>' . join("", $attachments) .'</div>
+            <div class="context_menu" anchor="msg'.$i.'">';
+
     if ($from) {
-        echo 'from">
-        <span class="message_content">'.$msg.'</span>
-        <div class="context_menu" anchor="msg'.$i.'">
+        echo '
             <a title="Edit"   ><img class="material-symbols-rounded" src="img/icons/edit.png"     onclick=" edit('.$i.')"></a>
             <a title="Delete" ><img class="material-symbols-rounded" src="img/icons/delete.png"   onclick="
-                                if (confirm(\'Do you really want to permanently delete this message?\')) {     del('.$i.');}"></a>
-            <a title="Forward"><img class="material-symbols-rounded" src="img/icons/forward.png"  onclick="  fwd('.$i.')"></a>
-            <a title="Reply"  ><img class="material-symbols-rounded" src="img/icons/reply.png"    onclick="reply('.$i.')"></a>
-            <a title="React"  ><img class="material-symbols-rounded" src="img/icons/reaction.png" onclick="react('.$i.')"></a>
-            <a title="Info"   ><img class="material-symbols-rounded" src="img/icons/info.png"     onclick=" info('.$i.')"></a>
-        </div>';
-    } else {
-        echo 'to">
-        <span class="message_content">'.$msg.'</span>
-        <div class="context_menu" anchor="msg'.$i.'">
-            <a title="Forward"><img class="material-symbols-rounded" src="img/icons/forward.png"  onclick="  fwd('.$i.')"></a>
-            <a title="Reply"  ><img class="material-symbols-rounded" src="img/icons/reply.png"    onclick="reply('.$i.')"></a>
-            <a title="React"  ><img class="material-symbols-rounded" src="img/icons/reaction.png" onclick="react('.$i.')"></a>
-            <a title="Info"   ><img class="material-symbols-rounded" src="img/icons/info.png"     onclick=" info('.$i.')"></a>
-        </div>';
+                                if (confirm(\'Do you really want to permanently delete this message?\')) {   del('.$i.');}"></a>';
     }
+
+    echo '
+            <a title="Forward"><img class="material-symbols-rounded" src="img/icons/forward.png"  onclick="  fwd('.$i.')"></a>
+            <a title="Reply"  ><img class="material-symbols-rounded" src="img/icons/reply.png"    onclick="reply('.$i.')"></a>
+            <a title="React"  ><img class="material-symbols-rounded" src="img/icons/reaction.png" onclick="react('.$i.')"></a>
+            <a title="Info"   ><img class="material-symbols-rounded" src="img/icons/info.png"     onclick=" info('.$i.')"></a>
+        </div>';
+
     // echo "<span class='message_content'>$msg</span>";
     echo "</div>";
 }
 
 function post_message() {  // REQUIRES: user1, user2, msg
+    if (!empty($_FILES)) {
+        upload();
+    } else {
+        _post_message_2("none");
+    }
+}
+
+function _post_message_2($attachments) {
     global $conn;
     $myuser = intval(trim($_REQUEST["user1"]));
     $user2  = intval(trim($_REQUEST["user2"]));
@@ -87,14 +103,17 @@ function post_message() {  // REQUIRES: user1, user2, msg
 
     $old = json_decode($chat["messages"]);
     $now = strtotime("now");
-    array_push($old, [$myuser, $_REQUEST["msg"], $now, "Unedited", "Visible"]);
+    array_push($old, [
+        $myuser,
+        $_REQUEST["msg"],
+        $now,
+        "Unedited",
+        "Visible",
+        $attachments
+    ]);
     $new = addslashes(json_encode($old, JSON_UNESCAPED_SLASHES));
-    // print_r($new);
     $date = date("Y-m-d h:i:s");
     mysqli_query($conn, "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'");
-    /* echo "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'"; */
-
-    //  echo $_REQUEST["msg"];
 }
 
 
@@ -146,10 +165,14 @@ function msg_edit() {        // REQUIRES: chat_i, message, new
     mysqli_query($conn, "UPDATE `chats` SET `messages` = '$json' WHERE `id` = '$chat_i'");
 }
 
+
+
 function upload() {
     $files_count = count($_FILES["file"]["name"]);
 
     $target_dir = "img/user_upload/";
+    $attachments = array();
+
 
     for ($i = 0; $i < $files_count; $i ++) {
         global $conn;
@@ -159,15 +182,21 @@ function upload() {
         $file_type = end(explode(".", $_FILES["file"]["name"][$i]));
         echo $file_type;
         $file_name = sprintf('%05d', $in_folder) . "." . $file_type;
+        $org_name = $_FILES["file"]["name"][$i];
         // basename($_FILES["file"]["name"][$i])
 
         $target_file_path = $target_dir . $file_name;
 
         if (move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file_path)) {
-            mysqli_query($conn, "INSERT INTO `media` (`org_name`, `file`) VALUES ('" . $_FILES["file"]["name"][$i] . "', '$file_name')");
+            mysqli_query($conn, "INSERT INTO `media` (`org_name`, `file`) VALUES ('$org_name', '$file_name')");
+            array_push($attachments, [$file_name, $org_name]);
         }
     }
+
+    _post_message_2(json_encode($attachments));
 }
+
+
 
 session_start();
 $_SESSION["expire"] = strtotime("Next hour");
