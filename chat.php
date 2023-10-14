@@ -9,10 +9,14 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="context_menu.css">
         <script src="dialog.js"></script>
+        <script src="menu.js"></script>
+        <script src="chat.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     
-    <body onload="update_messages()" id="chat">
+    <body id="chat">
+        <iframe id="download" style="display:none;"></iframe>
+
         <dialog id="search">
             <main>
                 <div class="row">
@@ -36,8 +40,8 @@
 
         <div style="display:none;" id="data">
             <?php
-                // $userid = $_SESSION["user"];
-                $userid = 1;
+                $userid = $_SESSION["user"];
+                // $userid = 1;
                 
                 $conn = mysqli_connect("sql6.webzdarma.cz", "mensappwzcz5668", "*0Q22^zX29JC@p%e4DG0", "mensappwzcz5668");
                 $my_chats = mysqli_query($conn, "SELECT * FROM `chats` WHERE `user1` = '$userid' OR `user2` = '$userid' ORDER BY `last_message` DESC");
@@ -87,7 +91,17 @@
             <span id="reply_output"></span>
         </div>
 
-        <script src="chat.js"></script>
+        <div id="attachment-menu" trigger="">
+            <a href="#" onclick="file_open(this.parentElement.getAttribute('trigger'));">
+                <img src="img/icons/file_open.png" />
+                Open
+            </a>
+            <a href="#" onclick="file_download(this.parentElement.getAttribute('trigger'));">
+                <img src="img/icons/download.png" />
+                Download
+            </a>
+        </div>
+
         <br id="end">
 
     </body>

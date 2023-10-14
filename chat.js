@@ -1,11 +1,20 @@
-var data = document.getElementById("data").innerHTML.split("<br>");
-var myuser = data[0].trim();
-var user2  = data[1].trim();
-var chat_i = data[2].trim();
+var data, myuser, user2, chat_i, replying, attachments_count, attachment_files, message_shown_length;
 
-var replying = null;
-var attachments_count = 0;
-var attachment_files = [];
+window.addEventListener("load", function () {
+
+    data = document.getElementById("data").innerHTML.split("<br>");
+    myuser = data[0].trim();
+    user2  = data[1].trim();
+    chat_i = data[2].trim();
+
+    replying = null;
+    attachments_count = 0;
+    attachment_files = [];
+
+    message_shown_length = 30;
+
+    update_messages();
+});
 
 
 function chat_processor_request(process, args, fun) {
@@ -25,6 +34,9 @@ function update_messages(args=null) {
     xhttp.open("GET", "chat_processor.php?p=messages&user1="+myuser+"&user2="+user2, true);
     xhttp.onload = function () {
         document.getElementById("messages").innerHTML = this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1];
+        for (const element of document.querySelectorAll(".attachment")) {
+            bind_menu(element, "attachment-menu");
+        }
     }
     xhttp.send();
 }
@@ -54,7 +66,7 @@ function post() {
             fd.append("file[]", file, file.name)
         }
 
-        xhr.open("POST", "chat_processor.php?p=post&user1="+myuser+"&user2="+user2+"&msg="+value+"&attachments="+attachments);
+        xhr.open("POST", "chat_processor.php?p=post&user1="+myuser+"&user2="+user2+"&msg="+value);
         xhr.onload = function () {
             console.log(this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1]);
         }
@@ -89,8 +101,6 @@ function cancel_reply() {
     output.style.flex = 0;
 }
 
-const message_shown_length = 30;
-
 function trim_max(text="", max_length=10) {
     return (text.length > max_length) ? text.substring(0, max_length - 3) + "..." : text;
 }
@@ -110,7 +120,21 @@ function format_info(text) {
     alert("Message: " + message + "\nPosted: " + time + "\n" + x[3] + "\n" + x[4]);
 }
 
+function file_open(element_id) {
+    let element = document.querySelector("#" + element_id);
+    window.open(element.getAttribute("target"), "_blank");
+}
 
+function file_download(element_id) {
+    let element = document.querySelector("#" + element_id);
+    
+    var link = document.createElement("a");
+    link.setAttribute('download', '');
+    link.href = element.getAttribute("target");;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+}
 
 function attach(files) {
     for (let file of files) {

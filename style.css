@@ -247,7 +247,6 @@ nav .nav-label {
 }
 
 #chat .message .message_content .message_text {
-    margin-bottom: 10px;
     display: block;
 }
 
@@ -374,6 +373,7 @@ nav .nav-label {
     color: var(--fg-white);
     border: none;
     border-radius: 10px;
+    margin-top: 10px;
 }
 
 /********************************  SETTINGS  *********************************/
@@ -634,4 +634,38 @@ dialog input:focus {
 
 dialog output {
     overflow: scroll;
+}
+
+/**********************************  MENU  ***********************************/
+
+.context-menu {
+    position: fixed;
+    z-index: 9999;
+    visibility: hidden;
+    opacity: 0;
+    padding: 0px;
+    font-size: 11px;
+    background-color: #eee;
+    color: #444;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.context-menu a {
+    color: inherit;
+    display: block;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.context-menu a:hover {
+    background-color: #ddd;
+}
+
+.context-menu img {
+    vertical-align: middle;
+    width:  15px;
+    height: 15px;
+    margin-right: 5px;
 }

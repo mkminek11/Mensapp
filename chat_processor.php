@@ -11,6 +11,7 @@ if ($_REQUEST["p"] == "info")     {msg_info();}
 if ($_REQUEST["p"] == "del")      {msg_delete();}
 if ($_REQUEST["p"] == "edit")     {msg_edit();}
 
+$attachments_count = "0";
 
 function search() {  // REQUIRES: query
     global $conn;
@@ -61,7 +62,10 @@ function message(string $msg, bool $from, int $i, string $att_json) {
     $a_names = json_decode($att_json);
     $attachments = [];
     foreach ($a_names as $data) {
-        array_push($attachments, "<button class='attachment' onclick='window.open(\"img/user_upload/$data[0]\", \"_blank\")'>" . trim_file($data[1]) . "</button>");
+        global $attachments_count;
+        array_push($attachments, "<button class='attachment' onclick='window.open(\"img/user_upload/$data[0]\", \"_blank\")' target='img/user_upload/$data[0]' id='attachment_file_$attachments_count'>" . trim_file($data[1]) . "</button>");
+        
+        $attachments_count ++;
     }
 
     echo '<div id="msg'.$i.'" class="message ' . ($from ? 'from' : 'to') . '">
