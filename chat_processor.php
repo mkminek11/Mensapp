@@ -11,6 +11,9 @@ if ($_REQUEST["p"] == "info")     {msg_info();}
 if ($_REQUEST["p"] == "del")      {msg_delete();}
 if ($_REQUEST["p"] == "edit")     {msg_edit();}
 
+session_start();
+$_SESSION["expire"] = strtotime("Next hour");
+
 $attachments_count = "0";
 
 function search() {  // REQUIRES: query
@@ -117,6 +120,8 @@ function _post_message_2($attachments) {
     ]);
     $new = addslashes(json_encode($old, JSON_UNESCAPED_SLASHES));
     $date = date("Y-m-d h:i:s");
+    echo "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'";
+    // echo $attachments;
     mysqli_query($conn, "UPDATE `chats` SET `messages` = '$new', `last_message` = '$date' WHERE `id` = '$chat_i'");
 }
 
@@ -166,7 +171,8 @@ function msg_edit() {        // REQUIRES: chat_i, message, new
 
     $json = json_encode($m);
 
-    mysqli_query($conn, "UPDATE `chats` SET `messages` = '$json' WHERE `id` = '$chat_i'");
+    mysqli_execute_query($conn, "UPDATE `chats` SET `messages` = ? WHERE `id` = ?", [$json, $chat_i]);
+    
 }
 
 
@@ -177,14 +183,12 @@ function upload() {
     $target_dir = "img/user_upload/";
     $attachments = array();
 
+    global $conn;
 
     for ($i = 0; $i < $files_count; $i ++) {
-        global $conn;
-
-        $in_folder = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `media`"));
+        $in_folder = scandir("img/user_upload/");
 
         $file_type = end(explode(".", $_FILES["file"]["name"][$i]));
-        echo $file_type;
         $file_name = sprintf('%05d', $in_folder) . "." . $file_type;
         $org_name = $_FILES["file"]["name"][$i];
         // basename($_FILES["file"]["name"][$i])
@@ -192,17 +196,11 @@ function upload() {
         $target_file_path = $target_dir . $file_name;
 
         if (move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file_path)) {
-            mysqli_query($conn, "INSERT INTO `media` (`org_name`, `file`) VALUES ('$org_name', '$file_name')");
             array_push($attachments, [$file_name, $org_name]);
         }
     }
 
     _post_message_2(json_encode($attachments));
 }
-
-
-
-session_start();
-$_SESSION["expire"] = strtotime("Next hour");
 
 ?>

@@ -57,7 +57,7 @@ function search() {
 
 function post() {
     let value = document.getElementById("textbox").value;
-    if (!/^\s*$/.test(value)) {  // if message is not empty nor made just out of spaces
+    if (!/^\s*$/.test(value)) {  // if message is neither empty nor made just out of spaces
         const xhr = new XMLHttpRequest();
         const fd  = new FormData();
         const f   = document.querySelector("#file_upload");
@@ -69,13 +69,14 @@ function post() {
         xhr.open("POST", "chat_processor.php?p=post&user1="+myuser+"&user2="+user2+"&msg="+value);
         xhr.onload = function () {
             console.log(this.responseText.split("<!--WZ-REKLAMA-1.0IK-->")[1]);
+            update_messages();
+            cancel_reply();
         }
 
         xhr.send(fd);
 
         cancel_all_attachments();
         document.querySelector("#textbox").value = "";
-        update_messages();
     }
 }
 
@@ -120,6 +121,8 @@ function format_info(text) {
     alert("Message: " + message + "\nPosted: " + time + "\n" + x[3] + "\n" + x[4]);
 }
 
+
+
 function file_open(element_id) {
     let element = document.querySelector("#" + element_id);
     window.open(element.getAttribute("target"), "_blank");
@@ -135,6 +138,8 @@ function file_download(element_id) {
     link.click();
     link.remove();
 }
+
+
 
 function attach(files) {
     for (let file of files) {
