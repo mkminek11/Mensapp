@@ -1,0 +1,47 @@
+.context_menu {
+    display: none;
+    opacity: 0;
+    transition: 0.3s ease;
+
+    list-style-type: none;
+    font-size: small;
+    z-index: 9999;
+    background-color: #333;
+
+    margin: 0px;
+    border-radius: 7px;
+    padding: 8px 4px;
+
+    position: absolute;
+    top: -30px;
+    right: -5px;
+    float: left;
+
+    box-shadow: 2px 2px 3px #3333;
+}
+
+.to .context_menu {left: 5px; right: unset;}
+
+.context_menu a {
+    margin: 0px;
+    display: inline;
+    margin: 0px;
+    padding: 8px 6px 4px;
+    border-radius: 4px;
+    transition: 0.2s ease;
+}
+
+.context_menu a img {
+    filter: invert();
+    width:  20px;
+    height: 20px;
+}
+
+.context_menu a:hover {
+    background-color: #555;
+}
+
+.message .message_content:hover + .context_menu, .context_menu:hover {
+    display: block;
+    opacity: 1;
+}
