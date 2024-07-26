@@ -2,15 +2,23 @@ from dataclasses import dataclass
 import datetime
 import sqlite3
 
+conn = sqlite3.connect("database.db", check_same_thread=False)
+conn.row_factory = sqlite3.Row
+
+c = conn.cursor()
+
+
 @dataclass
 class User:
     id: int
     email: str
-    first_name: str
-    last_name: str
+    fname: str
+    lname: str
     password: str
 
     def __post_init__(self):
+        self.first_name = self.fname
+        self.last_name  = self.lname
         self.name = self.first_name + " " + self.last_name
 
     @classmethod
@@ -34,3 +42,7 @@ class Project:
     def from_db(cls, row:sqlite3.Row):
         return Project(**dict(row))
         # return Project(row["id"], row["title"], row["description"], row["state"], row["created"])
+
+    @classmethod
+    def from_id(cls, id:int):
+        return Project.from_db(c.execute("SELECT * FROM `projects` WHERE `id` = ?", (id,)).fetchone())

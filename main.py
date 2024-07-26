@@ -53,6 +53,11 @@ def projects():
     return render_template("/projects.html", projects = proj)
 
 
+@app.route("/project/<project>")
+def project(project):
+    return render_template("project.html", project = Project.from_id(project))
+
+
 
 if __name__ == "__main__":
     app.run(debug = True)

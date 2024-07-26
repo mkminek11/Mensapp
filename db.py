@@ -3,11 +3,6 @@ from hashlib import sha1
 import sqlite3
 from lib import *
 
-conn = sqlite3.connect("database.db", check_same_thread=False)
-conn.row_factory = sqlite3.Row
-
-c = conn.cursor()
-
 
 
 def empty(something:Any): return something
