@@ -1,4 +1,4 @@
-from typing import Any, Callable, Literal
+from typing import Any, Callable
 from hashlib import sha1
 import sqlite3
 from lib import *
@@ -9,7 +9,7 @@ def empty(something:Any): return something
 
 def authenticate(email:str, password:str) -> User | Literal[False]:
     user = c.execute("SELECT * FROM `users` WHERE `email` = ? AND `password` = ?", (email, sha1(password.encode()).hexdigest()))
-    return User.from_db(user.fetchone()) if user.rowcount else False
+    return User.from_db(u) if (u := user.fetchone()) else False
 
 def create_account(fname:str, lname:str, email:str, password:str) -> None:
     pwd = sha1(password.encode()).hexdigest()

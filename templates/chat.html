@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mensapp</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="shortcut-icon" href="favicon.ico">
+        <script src="{{ url_for('static', filename='scripts/chat.js') }}"></script>
+    </head>
+    <body onload="update_messages()">
+        {% include '_navigation.html' %}
+
+        <div class="chat">
+            {% if chat %}
+                <div class="chat-sidebar">
+                    <div class="other-chats">
+                        {% for other_chat in user.get_chats_obj() %}
+                            <div class="other-chat">
+                                <img src="">
+                                <h4>{{ other_chat.get_title(user.id) }}</h4>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="new-chat"><a onclick="">Start a new chat</a></div>
+                </div>
+                <div class="chat-main">
+                    <div class="messages"></div>
+                </div>
+                <div class="chat-prompt">
+                    <div id="attachments"></div>
+                    
+                    <label for="btn-react"  class="btn btn-react" >
+                        <img class="icon" src="{{ url_for('static', filename='img/icons/reaction.png') }}" alt="react">
+                    </label>
+                    <button class="btn-invisible" id="btn-react" onclick=""></button>
+                    
+                    <label for="attach" class="btn btn-attach">
+                        <img class="icon" src="{{ url_for('static', filename='img/icons/attach_file.png') }}" alt="attach">
+                    </label>
+                    <input type="file" class="btn-invisible" id="attach" onchange="attach(this.files)" name="file[]" multiple></button>
+                    
+                    <span class="input">
+                        <input type="text" name="message" id="message" onkeydown="if (event.key == 'Enter') {post()}">
+                        <button onclick="post()"><img class="icon" src="{{ url_for('static', filename='img/icons/send.png') }}" alt="post"></button>
+                    </span>
+
+                    <input type="hidden" name="chat_id" id="chat_id" value="{{ chat.id }}">
+                </div>
+            {% else %}
+                <h2>It seems like you have no chats yet.</h2>
+                <h1>Start a chat <a onclick="">here</a>.</h1>
+            {% endif %}
+        </div>
+    </body>
+</html>
